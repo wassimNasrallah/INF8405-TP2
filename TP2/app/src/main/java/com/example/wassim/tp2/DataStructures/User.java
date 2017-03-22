@@ -32,6 +32,14 @@ public class User {
         this.userLocation = null;
     }
 
+    public User getUser(String userName){
+        //TODO get location/image from database
+        User u = new User(userName,null);
+        u.updateLocation(null);
+        return u;
+
+    }
+
     public void updateLocation(Location location){
         this.userLocation = location;
     }

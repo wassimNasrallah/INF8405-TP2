@@ -2,18 +2,21 @@ package com.example.wassim.tp2;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.wassim.tp2.DataStructures.*;
 import com.example.wassim.tp2.DataStructures.Group;
+import com.example.wassim.tp2.DataStructures.Settings;
+import com.example.wassim.tp2.database.DatabaseTest;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,12 +33,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         startTimer();
         setContentView(R.layout.login);
-
+        //testDatabase();
         buttonPhoto = (Button) findViewById(R.id.buttonPhoto);
         img = (ImageView) findViewById(R.id.ImageView);
 
         buttonPhoto.setOnClickListener(new buttonPhotoListener());
         butListener();
+    }
+
+    //Test database
+    private void testDatabase(){
+        DatabaseTest.groupDaoTest1(this.getBaseContext());
     }
 
     public void butListener() {

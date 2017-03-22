@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.wassim.tp2.DataStructures.ContextHolder;
 import com.example.wassim.tp2.DataStructures.Group;
 import com.example.wassim.tp2.DataStructures.Settings;
 import com.example.wassim.tp2.database.DatabaseTest;
@@ -35,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         startTimer();
         setContentView(R.layout.login);
+
+        ContextHolder.setContext(this);
         //testDatabase();
+
         buttonPhoto = (Button) findViewById(R.id.buttonPhoto);
         ((Button) findViewById(R.id.buttonLogin)).setEnabled(false);
         img = (ImageView) findViewById(R.id.ImageView);
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Test database
     private void testDatabase(){
-        DatabaseTest.groupDaoTest1(this.getBaseContext());
+        DatabaseTest.groupDaoTest1(this);
     }
 
     public void butListener() {

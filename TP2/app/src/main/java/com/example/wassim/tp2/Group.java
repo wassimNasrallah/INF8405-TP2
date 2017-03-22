@@ -40,7 +40,7 @@ public class Group extends AppCompatActivity {
 
     public void butListener() {
 
-        buttonVote = (Button) findViewById(R.id.buttonLogin);
+        buttonVote = (Button) findViewById(R.id.buttonVote);
         buttonVote.setOnClickListener(new View.OnClickListener() {
 
             @Override

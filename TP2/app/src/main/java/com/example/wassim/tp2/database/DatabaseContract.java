@@ -38,7 +38,7 @@ public final class DatabaseContract {
 
      /* Inner class that defines the table contents */
     public static class GroupTable implements BaseColumns {
-        public static final String TABLE_NAME = "group";
+        public static final String TABLE_NAME = "Group";
         public static final String GROUP_NAME_COL1 = "name";
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
@@ -50,7 +50,7 @@ public final class DatabaseContract {
     }
 
     public static class UserTable implements BaseColumns {
-        public static final String TABLE_NAME = "user";
+        public static final String TABLE_NAME = "User";
         public static final String NAME_COL1 = "name";
         public static final String PHOTO_COL2 = "photo";
 
@@ -64,7 +64,7 @@ public final class DatabaseContract {
     }
 
     public static class RoleTable implements BaseColumns {
-        public static final String TABLE_NAME = "role";
+        public static final String TABLE_NAME = "Role";
         public static final String USER_REFERENCE_COL1 = "userId";
         public static final String GROUP_REFERENCE_COL2 = "groupId";
         public static final String ROLE_COL3 = "role";
@@ -83,7 +83,7 @@ public final class DatabaseContract {
     }
 
     public static class PlaceScoreTable implements BaseColumns {
-        public static final String TABLE_NAME = "placeScrore";
+        public static final String TABLE_NAME = "PlaceScrore";
         public static final String USER_REFERENCE_COL1 = "userId";
         public static final String PLACE_REFERENCE_COL2 = "placeId";
         public static final String SCORE_COL3 = "score";
@@ -101,7 +101,7 @@ public final class DatabaseContract {
     }
 
    public static class PlaceTable implements BaseColumns {
-       public static final String TABLE_NAME = "place";
+       public static final String TABLE_NAME = "Place";
        public static final String NAME_COL1 = "name";
        public static final String PHOTO_NAME_COL2 = "photo";
 
@@ -116,7 +116,7 @@ public final class DatabaseContract {
    }
 
     public static class EventTable implements BaseColumns {
-        public static final String TABLE_NAME = "event";
+        public static final String TABLE_NAME = "Event";
         public static final String GROUP_REFERENCE_COL1 = "groupId";
         public static final String PLACE_REFERENCE_COL2 = "placeId";
         public static final String NAME_COL3 = "name";
@@ -141,7 +141,7 @@ public final class DatabaseContract {
     }
 
     public static class EventParticipationTable implements BaseColumns {
-        public static final String TABLE_NAME = "eventParticipation";
+        public static final String TABLE_NAME = "EventParticipation";
         public static final String USER_REFERENCE_COL1 = "userId";
         public static final String PLACE_REFERENCE_COL2 = "placeId";
         public static final String SCORE_COL3 = "answer";

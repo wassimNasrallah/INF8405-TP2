@@ -20,8 +20,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(DatabaseContract.UserTable.CREATE_TABLE);
         db.execSQL(DatabaseContract.RoleTable.CREATE_TABLE);
         db.execSQL(DatabaseContract.PlaceTable.CREATE_TABLE);
-        db.execSQL(DatabaseContract.ScoreTable.CREATE_TABLE);
+        db.execSQL(DatabaseContract.PlaceScoreTable.CREATE_TABLE);
         db.execSQL(DatabaseContract.EventTable.CREATE_TABLE);
+        db.execSQL(DatabaseContract.EventParticipationTable.CREATE_TABLE);
     }
 
     @Override
@@ -32,8 +33,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(DatabaseContract.UserTable.DELETE_TABLE);
         db.execSQL(DatabaseContract.RoleTable.DELETE_TABLE);
         db.execSQL(DatabaseContract.PlaceTable.DELETE_TABLE);
-        db.execSQL(DatabaseContract.ScoreTable.DELETE_TABLE);
+        db.execSQL(DatabaseContract.PlaceScoreTable.DELETE_TABLE);
         db.execSQL(DatabaseContract.EventTable.DELETE_TABLE);
+        db.execSQL(DatabaseContract.EventParticipationTable.DELETE_TABLE);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

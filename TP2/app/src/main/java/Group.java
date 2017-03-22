@@ -16,13 +16,16 @@ public class Group {
     private Events event;
     public void createEvent(int locationNumber, String name, String description, Date start, Date end){
         event = new Events(m_activity,name,locations[locationNumber],start,end, users,description);
-        //Send event
+        //Send event to users
     }
     public void recordUserAnswerForLocation(String user, List<Integer> notes){
         if(users.contains(user)){
             for(int i =0;i<notes.size();i++){
-                locations[i].
+                locations[i].addScore(user,notes.get(i));
             }
         }
+    }
+    public void recordUserAnswerForEvent(String user, AnswerToEvent answer){
+        event.setUserAnswer(user,answer);
     }
 }

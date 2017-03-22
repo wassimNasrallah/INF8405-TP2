@@ -1,4 +1,5 @@
 import android.graphics.Picture;
+import android.location.Location;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ public class Endroit {
 
     private Picture locationImage;
     private HashMap<String,Integer> userNotes;
+    private Location location;
 
     //might need more stuff in here
     public Endroit(List<String>users){

@@ -3,8 +3,15 @@
  */
 
 public enum AnswerToEvent {
-    YES,
-    NO,
-    MAYBE,
-    NOTANSWERED
+    YES("Participe"),
+    NO("Ne participe pas"),
+    MAYBE("Participe peut-etre"),
+    NOTANSWERED("Sans reponse");
+    String message;
+    AnswerToEvent(String s){
+        message = s;
+    }
+    public String ToString(){
+        return message;
+    }
 }

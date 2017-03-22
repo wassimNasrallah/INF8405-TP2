@@ -36,8 +36,8 @@ public class Events {
         answerMap = new HashMap<String,AnswerToEvent>();
         this.start =start;
         this.end = end;
-        for(String name : names){
-            answerMap.put(name, AnswerToEvent.NOTANSWERED);
+        for(String user : names){
+            answerMap.put(user, AnswerToEvent.NOTANSWERED);
         }
         this.freeDescription = freeDescription;
     }

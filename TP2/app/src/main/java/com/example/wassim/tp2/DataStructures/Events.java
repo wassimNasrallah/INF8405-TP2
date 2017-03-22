@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.CalendarContract;
@@ -83,7 +84,7 @@ public class Events {
         startMillis = calDate.getTimeInMillis();
 
         try {
-            ContentResolver cr = m_activity.getContentResolver();
+            ContentResolver cr = ContextHolder.getMainContext().getContentResolver();
             ContentValues values = new ContentValues();
             values.put(CalendarContract.Events.DTSTART, startMillis);
             values.put(CalendarContract.Events.DTEND, calDate.getTimeInMillis() + 60 * 60 * 1000);
@@ -95,7 +96,7 @@ public class Events {
             values.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance()
                     .getTimeZone().getID());
             System.out.println(Calendar.getInstance().getTimeZone().getID());
-            if (ActivityCompat.checkSelfPermission(m_activity, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(ContextHolder.getMainContext(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
 
                 return;
             }

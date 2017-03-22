@@ -24,7 +24,7 @@ public class Group {
     public static boolean getOrCreateGroup(String name){
         if(false){//TODO seek for database if the group exist
             //TODO fill the m_group with a new group according to database
-            m_group = getGroupFromDatabase(name, activity);
+            m_group = getGroupFromDatabase(name);
             m_group.users.add(User.getUser().getUserName());
             //TODO add current user to group and database
             return true;

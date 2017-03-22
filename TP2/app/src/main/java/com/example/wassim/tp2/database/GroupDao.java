@@ -4,8 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
-import com.example.wassim.tp2.Group;
+import com.example.wassim.tp2.DataStructures.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,35 @@ public class GroupDao {
         context = context;
         databaseHelper = new DatabaseHelper(context);
     }
+    //raw queries
+    public void rawGatherGroupTable(String groupName){
 
-    public Group gatherGroup (String groupName){
-        Group gatheredGroup = new Group();
-        //TODO: build the group
-        return gatheredGroup;
+        SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
+        String query =
+                "SELECT User.name, User.photo, Role.role " +
+                "FROM Group" +
+                "JOIN Role ON Group.groupId = Role.groupId" +
+                "JOIN User ON User.userId = Role.groupId" +
+                "WHERE Group.name = ?";
+        String[] selectionArgs = {groupName};
+        Cursor cursor = dataBase.rawQuery(query,selectionArgs);
+        if (cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                String userName = cursor.getString(cursor.getColumnIndex("Group.name"));
+                String userRole = cursor.getString(cursor.getColumnIndex("Role.role"));
+                byte[] userPhotoByte = cursor.getBlob(cursor.getColumnIndex("User.photo"));
+                Bitmap userPhoto = BitmapFactory.decodeByteArray(userPhotoByte, 0, userPhotoByte.length);
+
+                User newUser = new User(userName,userPhoto);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+
     }
 
+
+    //queries
     public List gatherGroupTable(String groupName){
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         // Define a projection that specifies which columns from the database
@@ -108,6 +132,8 @@ public class GroupDao {
                 selection,
                 selectionArgs);
     }
+
+
 
     //@Override
     protected void onDestroy() {

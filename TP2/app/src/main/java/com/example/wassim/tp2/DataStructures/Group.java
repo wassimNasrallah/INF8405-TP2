@@ -78,7 +78,6 @@ public class Group {
             event.update();
         }
         //TODO pull info from database
-
     }
 
     public void createEvent(int locationNumber, String name, String description, Date start, Date end){

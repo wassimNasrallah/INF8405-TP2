@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                     @SuppressWarnings("unchecked")
                     public void run() {
                         try {
-                            Group.getGroup().updateGroup();
+                            if(Group.getGroup()!=null)
+                                Group.getGroup().updateGroup();
                         }
                         catch (Exception e) {
                             // TODO Auto-generated catch block

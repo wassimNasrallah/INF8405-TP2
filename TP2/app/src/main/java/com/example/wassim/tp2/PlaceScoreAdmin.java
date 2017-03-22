@@ -18,7 +18,7 @@ public class PlaceScoreAdmin extends AppCompatActivity {
         setContentView(R.layout.place_score_admin);
         
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        Float ratingNumber = ratingBar.getRating();
+        //Float ratingNumber = ratingBar.getRating();
 
         //TODO: backend insert place score, photo...
 

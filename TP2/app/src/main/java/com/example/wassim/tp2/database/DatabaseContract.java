@@ -13,9 +13,7 @@ import android.provider.BaseColumns;
  *
  * Source: https://developer.android.com/training/basics/data-storage/databases.html
  *         http://stackoverflow.com/questions/17451931/how-to-use-a-contract-class-in-android
- *
- *
- *
+
  */
 
 public final class DatabaseContract {
@@ -142,7 +140,7 @@ public final class DatabaseContract {
 
     }
 
-    public static class EventParticipation implements BaseColumns {
+    public static class EventParticipationTable implements BaseColumns {
         public static final String TABLE_NAME = "eventParticipation";
         public static final String USER_REFERENCE_COL1 = "userId";
         public static final String PLACE_REFERENCE_COL2 = "placeId";

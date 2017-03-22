@@ -18,7 +18,7 @@ import android.provider.BaseColumns;
  *
  */
 
-public final class Tp2DatabaseContract {
+public final class DatabaseContract {
 
     public static final  int    DATABASE_VERSION   = 1;
     public static final  String DATABASE_NAME      = "Tp2Database.db";
@@ -36,7 +36,7 @@ public final class Tp2DatabaseContract {
      * To prevent someone from accidentally instantiating the contract class,
      * make the constructor private.
      */
-    private Tp2DatabaseContract(){}
+    private DatabaseContract(){}
 
      /* Inner class that defines the table contents */
     public static class GroupTable implements BaseColumns {
@@ -47,6 +47,7 @@ public final class Tp2DatabaseContract {
                 TABLE_NAME + " (" +
                 _ID + INTEGER_TYPE+ " PRIMARY KEY," +
                 GROUP_NAME_COL1 + TEXT_TYPE +" )";
+
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 

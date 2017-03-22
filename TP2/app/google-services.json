@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "792691648776",
+    "firebase_url": "https://inf8405-tp2-66ab6.firebaseio.com",
+    "project_id": "inf8405-tp2-66ab6",
+    "storage_bucket": "inf8405-tp2-66ab6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792691648776:android:44bd31a97454066a",
+        "android_client_info": {
+          "package_name": "com.example.wassim.tp2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792691648776-12tfcuh60utnmu1lr9v7m9sjdpf8j80b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGDLMbTwE3v3wrUEv2Ew9dIvpgBa3BBbE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

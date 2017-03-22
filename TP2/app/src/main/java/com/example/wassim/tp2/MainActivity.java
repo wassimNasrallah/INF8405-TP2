@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(getBaseContext(), ChooseGroup.class);
                 startActivity(i);
+
+                //TODO: call backend username, password and image
             }
         });
     }

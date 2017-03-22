@@ -100,7 +100,7 @@ public class GroupDao {
                 selection,
                 selectionArgs);
     }
-    
+
     //@Override
     protected void onDestroy() {
         databaseHelper.close();

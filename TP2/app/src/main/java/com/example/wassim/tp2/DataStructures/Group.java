@@ -24,6 +24,8 @@ public class Group {
     public static boolean getOrCreateGroup(String name, Activity activity){
         if(true){//TODO seek for database if the group exist
             //TODO fill the m_group with a new group according to database
+            m_group = getGroupFromDatabase(name, activity);
+            m_group.users.add(User.getUser().getUserName());
             //TODO add current user to group and database
             return true;
         }else{
@@ -42,6 +44,29 @@ public class Group {
 
         //TODO add group to database
         //TODO fill groupID with the database fixedID
+    }
+
+    private static Group getGroupFromDatabase(String name,Activity activity){
+        //TODO get list<string> users from db
+        //TODO get []int locationID from db
+        //TODO get int eventID
+        //TODO get the groupID
+        Group group = new Group(name, activity,-1 ,null,null,-1);
+        return group;
+    }
+    private Group(String name, Activity activity,int groupID, List<String> users, int[] locationID, int eventId){
+        if(eventId!=-1){
+            //TODO getEvent(eventID)
+        }
+        for(int i : locationID){
+            if(i!=-1){
+                //TODO getLocation(i)
+            }
+        }
+        this.name = name;
+        this.m_activity = activity;
+        this.users = users;
+        this.groupId = groupID;
     }
 
     public void updateGroup(){

@@ -20,6 +20,7 @@ public class Place {
         userNotes = new HashMap<>();
         for(String name : users){
             userNotes.put(name, -1);
+            //TODO update database with the empty answer
         }
     }
     public String getLocationString(){
@@ -28,6 +29,7 @@ public class Place {
     }
     public void addScore(String user, int note){
         userNotes.put(user,note);
+        //TODO update database with the new answer
     }
     public float getAverage(){
         float sum=0;

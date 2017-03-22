@@ -42,6 +42,8 @@ public class Events {
             answerMap.put(user, AnswerToEventEnum.NOTANSWERED);
         }
         this.freeDescription = freeDescription;
+        //TODO update database with the new event
+        //TODO fill database with empty event answer
     }
     private void addToDeviceCalendar(String startDate,String endDate, String title ,String description, Place location) {
 
@@ -105,6 +107,7 @@ public class Events {
             return false;
         if(answerMap.containsKey(name) && answerMap.get(name)==AnswerToEventEnum.NOTANSWERED){
             answerMap.put(name, answer);
+            //TODO update database with the answer
             return  true;
         }
         return false;

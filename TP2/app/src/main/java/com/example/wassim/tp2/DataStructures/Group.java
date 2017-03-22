@@ -17,6 +17,7 @@ public class Group {
     private List<String>users;
     private Place[] locations;
     private Events event;
+    private int groupId;
     private static Group m_group;
     public static Group getGroup(){return m_group;}
 
@@ -40,6 +41,7 @@ public class Group {
         users.add(User.getUser().getUserName());//TODO maybe use uniqueID
 
         //TODO add group to database
+        //TODO fill groupID with the database fixedID
     }
 
     public void updateGroup(){

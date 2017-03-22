@@ -12,7 +12,6 @@ import java.util.List;
  */
 
 public class Group {
-    private Activity m_activity;
     private String name;
     private String organisaterName;
     private List<String>users;
@@ -22,21 +21,20 @@ public class Group {
     private static Group m_group;
     public static Group getGroup(){return m_group;}
 
-    public static boolean getOrCreateGroup(String name, Activity activity){
-        if(true){//TODO seek for database if the group exist
+    public static boolean getOrCreateGroup(String name){
+        if(false){//TODO seek for database if the group exist
             //TODO fill the m_group with a new group according to database
             m_group = getGroupFromDatabase(name, activity);
             m_group.users.add(User.getUser().getUserName());
             //TODO add current user to group and database
             return true;
         }else{
-            m_group = new Group(name, activity);
+            m_group = new Group(name);
             return false;
         }
     }
 
-    private Group(String name, Activity activity){
-        this.m_activity = activity;
+    private Group(String name){
         this.name = name;
         this.event = null;
         this.organisaterName = User.getUser().getUserName();
@@ -47,25 +45,26 @@ public class Group {
         //TODO fill groupID with the database fixedID
     }
 
-    private static Group getGroupFromDatabase(String name,Activity activity){
+    private static Group getGroupFromDatabase(String name){
         //TODO get list<string> users from db
         //TODO get []int locationID from db
         //TODO get int eventID
         //TODO get the groupID
-        Group group = new Group(name, activity,-1 ,null,null,-1);
+        Group group = new Group(name,-1 ,null,null,-1);
         return group;
     }
-    private Group(String name, Activity activity,int groupID, List<String> users, int[] locationID, int eventId){
+    private Group(String name,int groupID, List<String> users, int[] locationID, int eventId){
         if(eventId!=-1){
             //TODO getEvent(eventID)
         }
-        for(int i : locationID){
-            if(i!=-1){
-                //TODO getLocation(i)
+        if(locationID!=null) {
+            for (int i : locationID) {
+                if (i != -1) {
+                    //TODO getLocation(i)
+                }
             }
         }
         this.name = name;
-        this.m_activity = activity;
         this.users = users;
         this.groupId = groupID;
     }
@@ -81,7 +80,7 @@ public class Group {
     }
 
     public void createEvent(int locationNumber, String name, String description, Date start, Date end){
-        event = new Events(m_activity,name,locations[locationNumber],start,end, users,description);
+        event = new Events(name,locations[locationNumber],start,end, users,description);
         //TODO Send event to users
     }
     public void recordUserAnswerForLocation(String user, List<Integer> notes){

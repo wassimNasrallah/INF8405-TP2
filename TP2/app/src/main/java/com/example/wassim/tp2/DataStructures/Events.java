@@ -25,7 +25,6 @@ import java.util.List;
 
 public class Events {
 
-    private Activity m_activity;
     private String name;
     private HashMap<String,AnswerToEventEnum> answerMap;
     private Place location;
@@ -33,8 +32,7 @@ public class Events {
     private Date end;
     private String freeDescription;
 
-    public Events(Activity activity, String name, Place location, Date start, Date end, List<String> names, String freeDescription){
-        m_activity = activity;
+    public Events(String name, Place location, Date start, Date end, List<String> names, String freeDescription){
         answerMap = new HashMap<String,AnswerToEventEnum>();
         this.start =start;
         this.end = end;

@@ -16,7 +16,7 @@
         android:inputType="textPersonName"
         android:text=""
         android:ems="10"
-        android:id="@+id/editText3" />
+        android:id="@+id/editTextUserName" />
 
     <Button
         android:text="Login"

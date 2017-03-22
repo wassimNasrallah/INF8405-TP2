@@ -2,12 +2,14 @@ package com.example.wassim.tp2;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.wassim.tp2.DataStructures.*;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.login);
 
         buttonPhoto = (Button) findViewById(R.id.buttonPhoto);
+        ((Button) findViewById(R.id.buttonLogin)).setEnabled(false);
         img = (ImageView) findViewById(R.id.ImageView);
 
         buttonPhoto.setOnClickListener(new buttonPhotoListener());
@@ -46,11 +49,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                EditText text = (EditText)findViewById(R.id.editTextUserName);
+                if(text!=null && text.getText()!=null && text.getText().length()>1) {
+                    Intent i = new Intent(getBaseContext(), ChooseGroup.class);
+                    startActivity(i);
 
-                Intent i = new Intent(getBaseContext(), ChooseGroup.class);
-                startActivity(i);
+                    //TODO: call backend username, password and image
 
-                //TODO: call backend username, password and image
+                    User.createUser(text.getText().toString(), ((BitmapDrawable) img.getDrawable()).getBitmap());
+                }
             }
         });
     }
@@ -59,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAM_REQUEST)
-        {
-            Bitmap bm = (Bitmap) data.getExtras().get("data");
-            img.setImageBitmap(bm);
+        if (requestCode == CAM_REQUEST) {
+            if (data != null && data.getExtras() != null) {
+                Bitmap bm = (Bitmap) data.getExtras().get("data");
+                img.setImageBitmap(bm);
+                buttonLogin.setEnabled(true);
+            }
         }
     }
 

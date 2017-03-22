@@ -1,6 +1,7 @@
 package com.example.wassim.tp2.DataStructures;
 
 import android.app.Activity;
+import android.location.Location;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,7 +71,14 @@ public class Group {
     }
 
     public void updateGroup(){
-        //TODO pull info from database and call update on child
+        for(Place p : locations){
+            p.update();
+        }
+        if(event!=null){
+            event.update();
+        }
+        //TODO pull info from database
+
     }
 
     public void createEvent(int locationNumber, String name, String description, Date start, Date end){

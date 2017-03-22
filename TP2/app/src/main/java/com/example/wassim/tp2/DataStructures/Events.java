@@ -45,6 +45,15 @@ public class Events {
         //TODO update database with the new event
         //TODO fill database with empty event answer
     }
+
+    public Events getEvent(int eventId){
+        //TODO fill the event from db
+        return null;
+    }
+
+    public void update(){
+
+    }
     private void addToDeviceCalendar(String startDate,String endDate, String title ,String description, Place location) {
 
         String stDate = startDate;

@@ -14,6 +14,8 @@ public class Settings {
     private static Settings m_settings;
     private Activity m_activity;
     private int databasePullTick = 1000;
+
+    public int getUpdateTick(){return databasePullTick;}
     public static Settings getInstance(){
         if(m_settings==null){
             m_settings = new Settings();

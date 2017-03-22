@@ -23,6 +23,16 @@ public class Place {
             //TODO update database with the empty answer
         }
     }
+
+    public void update(){
+
+    }
+
+    public Place getPlace(int placeId){
+        //TODO get info from db
+        return null;
+    }
+
     public String getLocationString(){
         //TODO: figure how to get good syntax
      return "LocationFormatWhatever";

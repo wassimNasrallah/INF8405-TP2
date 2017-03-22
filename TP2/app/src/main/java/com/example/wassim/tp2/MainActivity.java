@@ -2,12 +2,18 @@ package com.example.wassim.tp2;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.wassim.tp2.DataStructures.*;
+import com.example.wassim.tp2.DataStructures.Group;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,10 +22,13 @@ public class MainActivity extends AppCompatActivity {
     ImageView img;
     private static final int CAM_REQUEST = 1111;
     Button buttonLogin;
+    Timer timer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        startTimer();
         setContentView(R.layout.login);
 
         buttonPhoto = (Button) findViewById(R.id.buttonPhoto);
@@ -64,5 +73,27 @@ public class MainActivity extends AppCompatActivity {
             Intent cam = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(cam, CAM_REQUEST);
         }
+    }
+
+    public void startTimer(){
+        final Handler handler = new Handler();
+        Timer    timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @SuppressWarnings("unchecked")
+                    public void run() {
+                        try {
+                            Group.getGroup().updateGroup();
+                        }
+                        catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask,0, Settings.getInstance().getUpdateTick()*30);
     }
 }

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.wassim.tp2.Group;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,22 +12,22 @@ import java.util.List;
 /**
  * Created by gamyot
  */
-public class GroupDao {
+public class UserDao {
     private Context context;
     DatabaseHelper databaseHelper;
 
-    public GroupDao(Context context){
+    public UserDao(Context context){
         context = context;
         databaseHelper = new DatabaseHelper(context);
     }
 
-    public Group gatherGroup (String groupName){
-        Group gatheredGroup = new Group();
-        //TODO: build the group
-        return gatheredGroup;
-    }
+   // public User gatherUser (String userName){
+       // User gatheredUser = new Group();
 
-    public List gatherGroupTable(String groupName){
+        //return gatheredGroup;
+    //}
+
+    public List readGroupTable(String groupName){
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         // Define a projection that specifies which columns from the database
         String[] projection = {
@@ -68,7 +66,6 @@ public class GroupDao {
 
 
     }
-
 
     public long writeInGroupTable(String groupName){
         SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();

@@ -40,6 +40,7 @@ public class ChooseGroup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 EditText text = (EditText)findViewById(R.id.textGroup);
 
                 Intent i = new Intent(getBaseContext(), Group.class);
@@ -48,6 +49,8 @@ public class ChooseGroup extends AppCompatActivity {
                 Intent i2 = new Intent(ChooseGroup.this, Group.class);
                 i2.putExtra("text", text.getText().toString());
                 startActivity(i2);
+
+                //TODO: backend group name
             }
         });
     }

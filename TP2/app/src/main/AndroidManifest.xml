@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".ChooseGroup" ></activity>
         <activity android:name=".Group" ></activity>
+        <activity android:name=".PlaceScore" ></activity>
+        <activity android:name=".PlaceScoreAdmin" ></activity>
 
     </application>
 

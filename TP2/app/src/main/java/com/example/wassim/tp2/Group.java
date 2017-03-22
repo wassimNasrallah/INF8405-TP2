@@ -9,12 +9,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 /**
  * Created by Wassim on 28/02/2017.
  */
 
 public class Group extends AppCompatActivity {
+
+    Button buttonVote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,32 @@ public class Group extends AppCompatActivity {
 
         setTitle(str);
 
+        butListener();
+
     }
+
+
+    public void butListener() {
+
+        buttonVote = (Button) findViewById(R.id.buttonLogin);
+        buttonVote.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                //TODO: if is admin
+                Intent i = new Intent(getBaseContext(), PlaceScoreAdmin.class);
+                startActivity(i);
+
+                //TODO: else
+                //Intent i = new Intent(getBaseContext(), PlaceScore.class);
+                //startActivity(i);
+
+                //TODO: call backend username, password and image
+            }
+        });
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

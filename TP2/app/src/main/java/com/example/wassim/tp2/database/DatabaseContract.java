@@ -45,7 +45,7 @@ public final class DatabaseContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                _ID + INTEGER_TYPE+ " PRIMARY KEY," +
+                _ID + INTEGER_TYPE+ PRIMARY_KEY + COMMA_SEP +
                 GROUP_NAME_COL1 + TEXT_TYPE +" )";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -84,8 +84,8 @@ public final class DatabaseContract {
 
     }
 
-    public static class ScoreTable implements BaseColumns {
-        public static final String TABLE_NAME = "scrore";
+    public static class PlaceScoreTable implements BaseColumns {
+        public static final String TABLE_NAME = "placeScrore";
         public static final String USER_REFERENCE_COL1 = "userId";
         public static final String PLACE_REFERENCE_COL2 = "placeId";
         public static final String SCORE_COL3 = "score";
@@ -100,7 +100,6 @@ public final class DatabaseContract {
                 PRIMARY_KEY + "(" + USER_REFERENCE_COL1 + COMMA_SEP + PLACE_REFERENCE_COL2 + ")" +
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
-
     }
 
    public static class PlaceTable implements BaseColumns {
@@ -112,7 +111,8 @@ public final class DatabaseContract {
                TABLE_NAME + " (" +
                _ID + INTEGER_TYPE +" PRIMARY KEY"+ COMMA_SEP +
                NAME_COL1 + TEXT_TYPE + COMMA_SEP +
-               PHOTO_NAME_COL2 + BLOB_TYPE +" )";
+               PHOTO_NAME_COL2 + BLOB_TYPE +
+               " )";
        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
    }
@@ -128,19 +128,35 @@ public final class DatabaseContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
+                _ID + INTEGER_TYPE+ PRIMARY_KEY + COMMA_SEP +
                 GROUP_REFERENCE_COL1 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                 PLACE_REFERENCE_COL2 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                 NAME_COL3 + TEXT_TYPE + COMMA_SEP +
                 START_TIME_COL4 + DATE_TYPE + COMMA_SEP +
                 END_TIME_COL5 + DATE_TYPE + COMMA_SEP +
                 DESCRIPTION_COL6 + TEXT_TYPE +
-                FOREIGN_KEY + GROUP_REFERENCE_COL1 + REFERENCES + GroupTable._ID+
+                FOREIGN_KEY + GROUP_REFERENCE_COL1 + REFERENCES + GroupTable._ID +
                 FOREIGN_KEY + PLACE_REFERENCE_COL2 + REFERENCES + PlaceTable._ID +
-                PRIMARY_KEY + "(" + GROUP_REFERENCE_COL1 + COMMA_SEP + PLACE_REFERENCE_COL2 + ")" +
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
 
+    public static class EventParticipation implements BaseColumns {
+        public static final String TABLE_NAME = "eventParticipation";
+        public static final String USER_REFERENCE_COL1 = "userId";
+        public static final String PLACE_REFERENCE_COL2 = "placeId";
+        public static final String SCORE_COL3 = "answer";
 
+        public static final String CREATE_TABLE = "CREATE TABLE " +
+                TABLE_NAME + " (" +
+                USER_REFERENCE_COL1 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
+                PLACE_REFERENCE_COL2 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
+                SCORE_COL3 + INTEGER_TYPE +
+                FOREIGN_KEY + USER_REFERENCE_COL1 + REFERENCES + UserTable._ID+
+                FOREIGN_KEY + PLACE_REFERENCE_COL2 + REFERENCES + PlaceTable._ID +
+                PRIMARY_KEY + "(" + USER_REFERENCE_COL1 + COMMA_SEP + PLACE_REFERENCE_COL2 + ")" +
+                " )";
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    }
 }

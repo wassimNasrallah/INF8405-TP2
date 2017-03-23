@@ -13,8 +13,11 @@ import java.util.List;
 
 public class Group {
     private String name;
+    public String getName(){return name;}
     private String organisaterName;
+    public String getOrganisaterName(){return organisaterName;}
     private List<User>users;
+    public List<User> getUserList(){return users;}
     private Place[] locations;
     public Place[]getLocations(){return locations;}
     private Events event;
@@ -24,11 +27,10 @@ public class Group {
     public static Group getGroup(){return m_group;}
 
     public static boolean getOrCreateGroup(String groupName){
-        if(false){//TODO seek for database if the group exist
-            //TODO fill the m_group with a new group according to database
-            m_group = getGroupFromDatabase(groupName);
-            m_group.users.add(User.getUser());
-            //TODO add current user to group and database
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        Group foundGroup = DatabaseAccesObject.gatherGroup(groupName);
+        if(foundGroup != null){
+            m_group = foundGroup;
             return true;
         }else{
             m_group = new Group(groupName);
@@ -43,12 +45,12 @@ public class Group {
         this.users = new ArrayList<>();
         users.add(User.getUser());
 
-        //TODO add group to database
-        //TODO fill groupID with the database fixedID
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        this.groupId =  dao.persistGroup(this);
     }
 
 
-    private Group(String name,int groupID, List<User> users, Integer[] locationID, int eventId){
+    public Group(String name,int groupID, List<User> users, Integer[] locationID, int eventId){
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
         if(eventId!=-1){
             this.event =  dao.gatherEvent(eventId);
@@ -69,29 +71,19 @@ public class Group {
 
     public void update(){
         Settings.getInstance().update();
-        updateGroup(getGroupFromDatabase(name));
+        updateGroup(DatabaseAccesObject.gatherGroup(name));
 
     }
 
     private static void updateGroup(Group outdatedGroup){
-        Group updatedGroup = getGroupFromDatabase(outdatedGroup.name);
+        Group updatedGroup = DatabaseAccesObject.gatherGroup(outdatedGroup.name);
         outdatedGroup.organisaterName = updatedGroup.organisaterName;
         outdatedGroup.locations = updatedGroup.locations;
         outdatedGroup.event = updatedGroup.event;
         outdatedGroup.users = updatedGroup.users;
     }
 
-    private static Group getGroupFromDatabase(String groupName){
-        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
-        //gather data from database
-        Integer groupId = dao.gatherGroupIdFromGroupName(groupName);
-        Integer eventId = dao.gatherEventIdFromGroupId(groupId);
-        List<User> userList = dao.gatherUserList(groupName);
-        Integer[] placeIdList = dao.gatherPlaceIdListFromEventId(eventId);
-        //create the group
-        Group group = new Group(groupName,groupId ,userList,placeIdList ,eventId);
-        return group;
-    }
+
 
     public void createEvent(int locationNumber, String name, String description, Date start, Date end){
         event = new Events(name,locations[locationNumber],start,end, users,description);

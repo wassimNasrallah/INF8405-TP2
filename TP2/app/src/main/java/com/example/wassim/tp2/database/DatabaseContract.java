@@ -173,4 +173,6 @@ public final class DatabaseContract {
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
+
+
 }

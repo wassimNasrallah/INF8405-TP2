@@ -9,7 +9,9 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 
 import com.example.wassim.tp2.DataStructures.AnswerToEventEnum;
+import com.example.wassim.tp2.DataStructures.ContextHolder;
 import com.example.wassim.tp2.DataStructures.Events;
+import com.example.wassim.tp2.DataStructures.Group;
 import com.example.wassim.tp2.DataStructures.Place;
 import com.example.wassim.tp2.DataStructures.User;
 
@@ -290,7 +292,76 @@ public class DatabaseAccesObject {
 
     }
 
-    private boolean isNotNull(Object o) {
+    public static Group gatherGroup(String groupName){
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        //gather data from database
+        List<User> userList = dao.gatherUserList(groupName);
+        Integer groupId = dao.gatherGroupIdFromGroupName(groupName);
+        Integer eventId = null;
+        Integer[] placeIdList = null;
+        if(isNotNull(groupId)) {
+            eventId = dao.gatherEventIdFromGroupId(groupId);
+        }else{
+            return null;
+        }
+        if (isNotNull(eventId)) {
+            placeIdList = dao.gatherPlaceIdListFromEventId(eventId);
+        }
+
+        Group group = new Group(groupName,groupId ,userList,placeIdList ,eventId);
+        return group;
+    }
+
+
+    public long persistGroup(Group group){
+        long newGroupId = insertGroup(group.getName());
+        long admin = gatherUserId(group.getOrganisaterName());
+        insertRole(newGroupId,admin,"admin");
+        return newGroupId;
+    }
+
+
+
+    private void insertRole(long groupId, long userId, String roleName) {
+        SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.RoleTable.GROUP_REFERENCE_COL2, groupId);
+        values.put(DatabaseContract.RoleTable.USER_REFERENCE_COL1, userId);
+        values.put(DatabaseContract.RoleTable.ROLE_COL3, roleName);
+        // Insert the new row, returning the primary key value of the new row
+        dataBase.insert(DatabaseContract.RoleTable.TABLE_NAME, null, values);
+    }
+
+    private int gatherUserId(String userName) {
+        SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
+        int userId = -1;
+        String query ="SELECT User.userId" +
+                        "FROM User" +
+                        "WHERE User.name = ?";
+        String[] selectionArgs = {userName.toString()};
+        Cursor cursor = dataBase.rawQuery(query, selectionArgs);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                userId =  cursor.getInt(cursor.getColumnIndex("User.userId"));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return userId;
+    }
+
+    public long insertGroup(String groupName){
+        SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.GroupTable.GROUP_NAME_COL1, groupName);
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = dataBase.insert(DatabaseContract.GroupTable.TABLE_NAME, null, values);
+        return newRowId;
+    }
+
+    private static boolean isNotNull(Object o) {
         return o != null;
     }
 

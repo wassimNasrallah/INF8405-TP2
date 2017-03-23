@@ -1,7 +1,10 @@
 package com.example.wassim.tp2.DataStructures;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Criteria;
@@ -51,36 +54,37 @@ public class User {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public static User createUser(String name, Bitmap picture) {
+        int answerRequest=0;
         LocationManager locationManager;
-
-// Get the LocationManager object from the System Service LOCATION_SERVICE
-        locationManager = (LocationManager) ContextHolder.getMainContext().getSystemService(Context.LOCATION_SERVICE);
-
-// Create a criteria object needed to retrieve the provider
-        Criteria criteria = new Criteria();
-
-// Get the name of the best available provider
-        String provider = locationManager.getBestProvider(criteria, true);
-
-// We can use the provider immediately to get the last known location
-
-        Location location = locationManager.getLastKnownLocation(provider);
-
-        // request that the provider send this activity GPS updates every 20 seconds
         if (ContextHolder.getMainContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextHolder.getMainContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    Activity#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity)ContextHolder.getMainContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-        }else {
+            } else {
+                ActivityCompat.requestPermissions((Activity)ContextHolder.getMainContext(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        answerRequest);
+            }
+        }else{
+            // Get the LocationManager object from the System Service LOCATION_SERVICE
+            locationManager = (LocationManager) ContextHolder.getMainContext().getSystemService(Context.LOCATION_SERVICE);
+
+            // Create a criteria object needed to retrieve the provider
+            Criteria criteria = new Criteria();
+
+            // Get the name of the best available provider
+            String provider = locationManager.getBestProvider(criteria, true);
+
+            // We can use the provider immediately to get the last known location
+
+            Location location = locationManager.getLastKnownLocation(provider);
+
             locationManager.requestLocationUpdates(provider, 20000, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    User.getUser().updateLocation(location);
+                    if(User.getUser()!=null) {
+                        User.getUser().updateLocation(location);
+                    }
                 }
 
                 @Override
@@ -120,5 +124,6 @@ public class User {
     public void updateLocation(Location location) {
 
         this.userLocation = location;
+        //TODO update local database
     }
 }

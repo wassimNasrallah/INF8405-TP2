@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.wassim.tp2.DataStructures.ContextHolder;
 import com.example.wassim.tp2.DataStructures.Group;
 import com.example.wassim.tp2.DataStructures.User;
 import com.example.wassim.tp2.DataStructures.Settings;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ContextHolder.setContext(this);
         startTimer();
         setContentView(R.layout.login);
         //testDatabase();

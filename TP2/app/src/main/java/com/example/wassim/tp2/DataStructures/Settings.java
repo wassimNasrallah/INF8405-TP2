@@ -4,8 +4,11 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.BatteryManager;
 import android.os.Build;
+
+import com.example.wassim.tp2.GroupActivity;
 
 /**
  * Created by Louis-Philippe on 3/16/2017.
@@ -30,14 +33,27 @@ public class Settings {
 
         BatteryManager bm = (BatteryManager)ContextHolder.getMainContext().getSystemService(Context.BATTERY_SERVICE);
         int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
-        if(batLevel<20 && askForBatterySaving){
+        if(batLevel<20 && askForBatterySaving && databasePullTick==1000){
             //Call UI for battery saving mode
 
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ContextHolder.getCurrentContext());
+            builder.setTitle("Battery usage").setMessage("Switch to power saving ?");
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Yes button clicked, do something
+                    databasePullTick = 30000;
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //No button clicked, do something
+                    askForBatterySaving=false;
+                }
+            });
+            builder.show();
 
-            //if yes
-            databasePullTick = 30000;
-            //else
-            askForBatterySaving=false;
+			
         }else if(batLevel>20){
             databasePullTick = 1000;
             askForBatterySaving = true;

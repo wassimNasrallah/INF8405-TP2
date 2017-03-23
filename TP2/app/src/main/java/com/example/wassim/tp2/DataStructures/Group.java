@@ -98,11 +98,9 @@ public class Group {
         event = new Events(name,locations[locationNumber],start,end, users,description);
         //TODO Send event to users
     }
-    public void recordUserAnswerForLocation(String user, List<Integer> notes){
-        if(users.contains(user)){
-            for(int i =0;i<notes.size();i++){
-                locations[i].addScore(user,notes.get(i));
-            }
+    public void recordUserAnswerForLocation(List<Integer> notes) {
+        for (int i = 0; i < notes.size(); i++) {
+            locations[i].addScore(User.getUser().getUserId(), notes.get(i));
         }
     }
     public void recordUserAnswerForEvent(Integer userId, AnswerToEventEnum answer){

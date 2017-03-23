@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.wassim.tp2.DataStructures.ContextHolder;
+
 /**
  * Created by Wassim on 28/02/2017.
  */
@@ -24,7 +26,7 @@ public class GroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group);
-
+        ContextHolder.setCurrentContext(this);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
 

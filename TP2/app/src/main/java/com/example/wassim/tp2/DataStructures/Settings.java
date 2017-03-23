@@ -2,6 +2,7 @@ package com.example.wassim.tp2.DataStructures;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.BatteryManager;
@@ -54,6 +55,7 @@ public class Settings {
             });
             builder.show();
 
+			
         }else if(batLevel>20){
             databasePullTick = 1000;
             askForBatterySaving = true;

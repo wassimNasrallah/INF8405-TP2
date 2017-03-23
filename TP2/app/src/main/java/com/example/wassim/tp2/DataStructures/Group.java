@@ -14,8 +14,7 @@ import java.util.List;
 public class Group {
     private String name;
     private String organisaterName;
-    private List<Integer>users;
-    public List<Integer>getUsers(){return users;}
+    private List<User>users;
     private Place[] locations;
     public Place[]getLocations(){return locations;}
     private Events event;
@@ -28,7 +27,7 @@ public class Group {
         if(false){//TODO seek for database if the group exist
             //TODO fill the m_group with a new group according to database
             m_group = getGroupFromDatabase(name);
-            m_group.users.add(User.getUser().getUserId());
+            m_group.users.add(User.getUser());
             //TODO add current user to group and database
             return true;
         }else{
@@ -42,14 +41,14 @@ public class Group {
         this.event = null;
         this.organisaterName = User.getUser().getUserName();
         this.users = new ArrayList<>();
-        users.add(User.getUser().getUserId());//TODO maybe use uniqueID
+        users.add(User.getUser());
 
         //TODO add group to database
         //TODO fill groupID with the database fixedID
     }
 
 
-    private Group(String name,int groupID, List<Integer> users, Integer[] locationID, int eventId){
+    private Group(String name,int groupID, List<User> users, Integer[] locationID, int eventId){
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
         if(eventId!=-1){
             this.event =  dao.gatherEvent(eventId);
@@ -87,10 +86,10 @@ public class Group {
         //gather data from database
         Integer groupId = dao.gatherGroupIdFromGroupName(groupName);
         Integer eventId = dao.gatherEventIdFromGroupId(groupId);
-        List<Integer> userIdList = dao.gatherUserIdListFromGroup(groupName);
+        List<User> userList = dao.gatherUserList(groupName);
         Integer[] placeIdList = dao.gatherPlaceIdListFromEventId(eventId);
         //create the group
-        Group group = new Group(groupName,groupId ,userIdList,placeIdList ,eventId);
+        Group group = new Group(groupName,groupId ,userList,placeIdList ,eventId);
         return group;
     }
 
@@ -98,11 +97,9 @@ public class Group {
         event = new Events(name,locations[locationNumber],start,end, users,description);
         //TODO Send event to users
     }
-    public void recordUserAnswerForLocation(String user, List<Integer> notes){
-        if(users.contains(user)){
-            for(int i =0;i<notes.size();i++){
-                locations[i].addScore(user,notes.get(i));
-            }
+    public void recordUserAnswerForLocation(List<Integer> notes) {
+        for (int i = 0; i < notes.size(); i++) {
+            locations[i].addScore(User.getUser().getUserId(), notes.get(i));
         }
     }
     public void recordUserAnswerForEvent(Integer userId, AnswerToEventEnum answer){

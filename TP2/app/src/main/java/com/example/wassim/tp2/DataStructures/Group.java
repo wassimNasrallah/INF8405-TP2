@@ -45,6 +45,39 @@ public class Group {
         //TODO fill groupID with the database fixedID
     }
 
+
+    private Group(String name,int groupID, List<Integer> users, Integer[] locationID, int eventId){
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        if(eventId!=-1){
+            this.event =  dao.gatherEvent(eventId);
+        }
+        if(locationID!=null) {
+            ArrayList<Place> places= new ArrayList<>();
+            for (int i : locationID) {
+                if (i != -1) {
+                    places.add(dao.gatherPlace(i));
+                }
+            }
+            this.locations = places.toArray(locations);
+        }
+        this.name = name;
+        this.users = users;
+        this.groupId = groupID;
+    }
+
+    public void update(){
+        updateGroup(getGroupFromDatabase(name));
+
+    }
+
+    private static void updateGroup(Group outdatedGroup){
+        Group updatedGroup = getGroupFromDatabase(outdatedGroup.name);
+        outdatedGroup.organisaterName = updatedGroup.organisaterName;
+        outdatedGroup.locations = updatedGroup.locations;
+        outdatedGroup.event = updatedGroup.event;
+        outdatedGroup.users = updatedGroup.users;
+    }
+
     private static Group getGroupFromDatabase(String groupName){
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
         //gather data from database
@@ -55,32 +88,6 @@ public class Group {
         //create the group
         Group group = new Group(groupName,groupId ,userIdList,placeIdList ,eventId);
         return group;
-    }
-    private Group(String name,int groupID, List<Integer> users, Integer[] locationID, int eventId){
-        if(eventId!=-1){
-            DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
-            event =  dao.gatherEventFromEventId(eventId);
-        }
-        if(locationID!=null) {
-            for (int i : locationID) {
-                if (i != -1) {
-                    //TODO getLocation(i)
-                }
-            }
-        }
-        this.name = name;
-        this.users = users;
-        this.groupId = groupID;
-    }
-
-    public void updateGroup(){
-        for(Place p : locations){
-            p.update();
-        }
-        if(event!=null){
-            event.update();
-        }
-        //TODO pull info from database
     }
 
     public void createEvent(int locationNumber, String name, String description, Date start, Date end){

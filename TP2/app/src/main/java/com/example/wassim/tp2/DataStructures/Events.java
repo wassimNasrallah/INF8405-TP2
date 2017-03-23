@@ -57,7 +57,7 @@ public class Events {
 
     public Events getEvent(int eventId) {
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
-        return dao.gatherEventFromEventId(eventId);
+        return dao.gatherEvent(eventId);
     }
 
     public void update() {

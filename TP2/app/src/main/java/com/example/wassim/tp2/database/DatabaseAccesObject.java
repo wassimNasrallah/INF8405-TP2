@@ -10,6 +10,7 @@ import android.location.Location;
 import com.example.wassim.tp2.DataStructures.AnswerToEventEnum;
 import com.example.wassim.tp2.DataStructures.Events;
 import com.example.wassim.tp2.DataStructures.Place;
+import com.example.wassim.tp2.DataStructures.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -95,7 +96,6 @@ public class DatabaseAccesObject {
         return groupId;
     }
 
-    // get []int placeId from db
     public Integer[] gatherPlaceIdListFromEventId(Integer eventId) {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         List<Integer> placeIdList = new ArrayList<>();
@@ -120,8 +120,7 @@ public class DatabaseAccesObject {
     }
 
 
-    //getEvent(eventID)
-    public Events gatherEventFromEventId(Integer eventId) {
+    public Events gatherEvent(Integer eventId) {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         String eventName = null;
         Integer placeId = null;
@@ -130,7 +129,7 @@ public class DatabaseAccesObject {
         Date endDate = null;
         String description = null;
         String placeIdListQuery =
-                "SELECT Event.placeId, Event.name, Even.startTime, Event.endTime, Event.description, Event." +
+                "SELECT Event.placeId, Event.name, Even.startTime, Event.endTime, Event.description" +
                         "FROM Group" +
                         "JOIN Role ON Group.groupId = Role.groupId" +
                         "JOIN User ON User.userId = Role.userId" +
@@ -141,9 +140,9 @@ public class DatabaseAccesObject {
             while (!cursor.isAfterLast()) {
                 placeId = cursor.getInt(cursor.getColumnIndex("Event.placeId"));
                 eventName = cursor.getString(cursor.getColumnIndex("Event.name"));
-                String startDateString = cursor.getString(cursor.getColumnIndex("Even.startTime"));
-                String endDateString = cursor.getString(cursor.getColumnIndex("Even.endTime"));
-                description = cursor.getString(cursor.getColumnIndex("Even.description"));
+                String startDateString = cursor.getString(cursor.getColumnIndex("Event.startTime"));
+                String endDateString = cursor.getString(cursor.getColumnIndex("Event.endTime"));
+                description = cursor.getString(cursor.getColumnIndex("Event.description"));
                 startDate = extractDate(startDateString);
                 endDate = extractDate(endDateString);
                 cursor.moveToNext();
@@ -151,33 +150,40 @@ public class DatabaseAccesObject {
         }
         cursor.close();
         if (isNotNull(placeId)) {
-            eventPlace = gatherPlaceFromPlaceId(placeId);
+            eventPlace = gatherPlace(placeId);
         }
         HashMap<Integer, AnswerToEventEnum> participationAnswerMap = gatherEventParticipationFromEventId(eventId);
         //TODO check for null parameters
         return new Events(eventName, eventPlace, startDate, endDate, participationAnswerMap, description);
-
-
     }
 
-    private Date extractDate(String rawDate){
-        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date resultingDate;
-        try {
-            resultingDate = originalFormat.parse(rawDate);
-            return resultingDate;
-        }
-        catch (ParseException e){
-            System.out.println("Error gathering the event date form database" + e.getMessage());
-            return null;
-        }
 
-
-    }
-
-    public HashMap<Integer,AnswerToEventEnum> gatherEventParticipationFromEventId(Integer eventId) {
+    public User gatherUser(Integer userId) {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
-        HashMap<Integer,AnswerToEventEnum> scoreMap = new HashMap<>();
+        String userName = null;
+        Bitmap photo = null;
+        String placeIdListQuery =
+                "SELECT User.name, User.photo" +
+                        "FROM User" +
+                        "WHERE User.userId = ?";
+        String[] selectionArgs = {userId.toString()};
+        Cursor cursor = dataBase.rawQuery(placeIdListQuery, selectionArgs);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                userName = cursor.getString(cursor.getColumnIndex("User.name"));
+                byte[] photoByte = cursor.getBlob(cursor.getColumnIndex("User.photo"));
+                photo = BitmapFactory.decodeByteArray(photoByte, 0, photoByte.length);
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return new User(userName, photo);
+    }
+
+
+    public HashMap<Integer, AnswerToEventEnum> gatherEventParticipationFromEventId(Integer eventId) {
+        SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
+        HashMap<Integer, AnswerToEventEnum> scoreMap = new HashMap<>();
         String placeScoreListQuery =
                 "SELECT EventParticipation.userId, EventParticipation.answer" +
                         "FROM Event" +
@@ -190,7 +196,7 @@ public class DatabaseAccesObject {
             while (!cursor.isAfterLast()) {
                 Integer userId = cursor.getInt(cursor.getColumnIndex("EventParticipation.userId"));
                 String answer = cursor.getString(cursor.getColumnIndex("EventParticipation.answer"));
-                scoreMap.put(userId,AnswerToEventEnum.resolveAnswer(answer));
+                scoreMap.put(userId, AnswerToEventEnum.resolveAnswer(answer));
                 cursor.moveToNext();
             }
         }
@@ -198,7 +204,7 @@ public class DatabaseAccesObject {
         return scoreMap;
     }
 
-    public Place gatherPlaceFromPlaceId(Integer placeId) {
+    public Place gatherPlace(Integer placeId) {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         HashMap<String, Integer> scoreMap = gatherScoreMapFromPlaceId(placeId);
         String placeName = "";
@@ -214,8 +220,7 @@ public class DatabaseAccesObject {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 byte[] placePhotoByte = cursor.getBlob(cursor.getColumnIndex("Place.photo"));
-                 image = BitmapFactory.decodeByteArray(placePhotoByte, 0, placePhotoByte.length);
-
+                image = BitmapFactory.decodeByteArray(placePhotoByte, 0, placePhotoByte.length);
                 placeName = cursor.getString(cursor.getColumnIndex("Place.name"));
                 Double longitude = cursor.getDouble(cursor.getColumnIndex("Place.longitude"));
                 Double latitude = cursor.getDouble(cursor.getColumnIndex("Place.latitude"));
@@ -246,7 +251,7 @@ public class DatabaseAccesObject {
             while (!cursor.isAfterLast()) {
                 String userName = cursor.getString(cursor.getColumnIndex("PlaceScore.userId"));
                 Integer score = cursor.getInt(cursor.getColumnIndex("PlaceScore.score"));
-                scoreMap.put(userName,score);
+                scoreMap.put(userName, score);
                 cursor.moveToNext();
             }
         }
@@ -256,5 +261,19 @@ public class DatabaseAccesObject {
 
     private boolean isNotNull(Object o) {
         return o != null;
+    }
+
+    private Date extractDate(String rawDate) {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date resultingDate;
+        try {
+            resultingDate = originalFormat.parse(rawDate);
+            return resultingDate;
+        } catch (ParseException e) {
+            System.out.println("Error gathering the event date form database" + e.getMessage());
+            return null;
+        }
+
+
     }
 }

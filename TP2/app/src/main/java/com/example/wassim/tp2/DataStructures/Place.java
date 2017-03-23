@@ -14,19 +14,19 @@ import java.util.List;
 public class Place {
 
     private Bitmap locationImage;
-    private HashMap<String,Integer> userScoreMap;
+    private HashMap<Integer,Integer> userScoreMap;
     private Location location;
 
     //might need more stuff in here
-    public Place(List<String>users){
+    public Place(List<Integer>users){
         userScoreMap = new HashMap<>();
-        for(String name : users){
-            userScoreMap.put(name, -1);
+        for(Integer userId : users){
+            userScoreMap.put(userId, -1);
             //TODO update database with the empty answer
         }
     }
 
-    public Place (Bitmap image, Location newLocation, HashMap<String,Integer> scoreMap ){
+    public Place (Bitmap image, Location newLocation, HashMap<Integer,Integer> scoreMap ){
         locationImage = image;
         userScoreMap = scoreMap;
         location = newLocation;
@@ -45,8 +45,8 @@ public class Place {
         //TODO: figure how to get good syntax
      return "LocationFormatWhatever";
     }
-    public void addScore(String user, int note){
-        userScoreMap.put(user,note);
+    public void addScore(int userId, int note){
+        userScoreMap.put(userId,note);
         //TODO update database with the new answer
     }
     public float getAverage(){

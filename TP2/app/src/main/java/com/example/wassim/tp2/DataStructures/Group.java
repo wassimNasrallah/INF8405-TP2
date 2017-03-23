@@ -16,7 +16,9 @@ public class Group {
     private String organisaterName;
     private List<User>users;
     private Place[] locations;
+    public Place[]getLocations(){return locations;}
     private Events event;
+    public Events getEvent(){return event;}
     private int groupId;
     private static Group m_group;
     public static Group getGroup(){return m_group;}
@@ -95,11 +97,9 @@ public class Group {
         event = new Events(name,locations[locationNumber],start,end, users,description);
         //TODO Send event to users
     }
-    public void recordUserAnswerForLocation(String user, List<Integer> notes){
-        if(users.contains(user)){
-            for(int i =0;i<notes.size();i++){
-                locations[i].addScore(user,notes.get(i));
-            }
+    public void recordUserAnswerForLocation(List<Integer> notes) {
+        for (int i = 0; i < notes.size(); i++) {
+            locations[i].addScore(User.getUser().getUserId(), notes.get(i));
         }
     }
     public void recordUserAnswerForEvent(Integer userId, AnswerToEventEnum answer){

@@ -1,10 +1,8 @@
 package com.example.wassim.tp2.DataStructures;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.CalendarContract;
@@ -48,7 +46,6 @@ public class Events {
     }
 
     public Events(String eventName, Place eventPlace, Date startTime, Date endTime, HashMap<Integer,AnswerToEventEnum> userNameAnswerMap, String eventDescription) {
-        m_activity = (Activity) ContextHolder.getMainContext();
         name = eventName;
         participationAnswerMap = userNameAnswerMap;
         location = eventPlace;
@@ -59,7 +56,7 @@ public class Events {
     }
 
     public Events getEvent(int eventId) {
-        DatabaseAccesObject dao = new DatabaseAccesObject(m_activity);
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
         return dao.gatherEventFromEventId(eventId);
     }
 

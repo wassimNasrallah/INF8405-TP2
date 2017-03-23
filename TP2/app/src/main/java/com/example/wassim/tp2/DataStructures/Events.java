@@ -32,6 +32,7 @@ public class Events {
     private String name;
     private HashMap<Integer, AnswerToEventEnum> participationAnswerMap;
     private Place location;
+    public Place getLocation(){return location;}
     private Date start;
     private Date end;
     private String freeDescription;

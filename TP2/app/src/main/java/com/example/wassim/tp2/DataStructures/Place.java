@@ -14,6 +14,7 @@ import java.util.List;
 public class Place {
 
     private Bitmap locationImage;
+    public Bitmap getLocationImage(){return locationImage;}
     private HashMap<Integer,Integer> userScoreMap;
     private Location location;
 
@@ -45,6 +46,15 @@ public class Place {
         //TODO: figure how to get good syntax
      return "LocationFormatWhatever";
     }
+
+    public double getLocationLat(){
+        return location.getLatitude();
+    }
+
+    public double getLocationLon(){
+        return location.getLongitude();
+    }
+
     public void addScore(int userId, int note){
         userScoreMap.put(userId,note);
         //TODO update database with the new answer

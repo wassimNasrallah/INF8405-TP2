@@ -15,6 +15,7 @@ public class Group {
     private String name;
     private String organisaterName;
     private List<User>users;
+    public List<User>getUsers(){return users;}
     private Place[] locations;
     public Place[]getLocations(){return locations;}
     private Events event;

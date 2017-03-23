@@ -24,15 +24,15 @@ public class Group {
     private static Group m_group;
     public static Group getGroup(){return m_group;}
 
-    public static boolean getOrCreateGroup(String name){
+    public static boolean getOrCreateGroup(String groupName){
         if(false){//TODO seek for database if the group exist
             //TODO fill the m_group with a new group according to database
-            m_group = getGroupFromDatabase(name);
+            m_group = getGroupFromDatabase(groupName);
             m_group.users.add(User.getUser());
             //TODO add current user to group and database
             return true;
         }else{
-            m_group = new Group(name);
+            m_group = new Group(groupName);
             return false;
         }
     }

@@ -14,6 +14,7 @@ public class Settings {
     private static Settings m_settings;
     private Activity m_activity;
     private int databasePullTick = 1000;
+    private boolean askForBatterySaving = true;
 
     public int getUpdateTick(){return databasePullTick;}
     public static Settings getInstance(){
@@ -29,9 +30,15 @@ public class Settings {
 
         BatteryManager bm = (BatteryManager)m_activity.getSystemService(Context.BATTERY_SERVICE);
         int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
-        if(batLevel<20){
+        if(batLevel<20 && askForBatterySaving){
             //Call UI for battery saving mode
+            //if yes
             databasePullTick = 30000;
+            //else
+            askForBatterySaving=false;
+        }else if(batLevel>20){
+            databasePullTick = 1000;
+            askForBatterySaving = true;
         }
         return true;
     }

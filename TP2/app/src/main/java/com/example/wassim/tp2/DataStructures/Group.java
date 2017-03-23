@@ -66,6 +66,7 @@ public class Group {
     }
 
     public void update(){
+        Settings.getInstance().update();
         updateGroup(getGroupFromDatabase(name));
 
     }

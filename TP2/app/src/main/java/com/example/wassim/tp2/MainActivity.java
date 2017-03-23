@@ -1,5 +1,6 @@
 package com.example.wassim.tp2;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ContextHolder.setContext(this);
+        ContextHolder.setMainContext(this);
+        ContextHolder.setCurrentContext(this);
         startTimer();
         setContentView(R.layout.login);
         //testDatabase();

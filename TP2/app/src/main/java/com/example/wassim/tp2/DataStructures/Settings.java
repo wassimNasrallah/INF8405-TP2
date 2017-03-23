@@ -2,6 +2,7 @@ package com.example.wassim.tp2.DataStructures;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.BatteryManager;
 import android.os.Build;
@@ -31,6 +32,8 @@ public class Settings {
         int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
         if(batLevel<20 && askForBatterySaving){
             //Call UI for battery saving mode
+
+
             //if yes
             databasePullTick = 30000;
             //else

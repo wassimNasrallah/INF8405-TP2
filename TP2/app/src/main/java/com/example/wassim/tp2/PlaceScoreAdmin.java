@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.RatingBar;
 
+import com.example.wassim.tp2.DataStructures.ContextHolder;
+
 /**
  * Created by Wassim on 22/03/2017.
  */
@@ -16,7 +18,7 @@ public class PlaceScoreAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.place_score_admin);
-        
+        ContextHolder.setCurrentContext(this);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         //Float ratingNumber = ratingBar.getRating();
 

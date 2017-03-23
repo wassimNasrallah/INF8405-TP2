@@ -9,6 +9,8 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import com.example.wassim.tp2.GroupActivity;
+
 /**
  * Created by Louis-Philippe on 3/16/2017.
  */
@@ -36,25 +38,22 @@ public class Settings {
             //Call UI for battery saving mode
 
             AlertDialog.Builder builder = new AlertDialog.Builder(ContextHolder.getMainContext());
-            builder.setTitle("Battery usage").setMessage("Switch to power saving ")
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Yes button clicked, do something
-                            databasePullTick = 100;
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //No button clicked, do something
-                            askForBatterySaving=false;
-                        }
-                    });
+            builder.setTitle("Battery usage").setMessage("Switch to power saving ?");
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //Yes button clicked, do something
+                    databasePullTick = 100;
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    //No button clicked, do something
+                    askForBatterySaving=false;
+                }
+            });
+            builder.show();
 
-//            //if yes
-//            databasePullTick = 30000;
-//            //else
-//            askForBatterySaving=false;
         }else if(batLevel>20){
             databasePullTick = 1000;
             askForBatterySaving = true;

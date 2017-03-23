@@ -24,7 +24,7 @@ public class Group {
     public Place[]getLocations(){return locations;}
     private Events event;
     public Events getEvent(){return event;}
-    private int groupId;
+    private long groupId;
     private static Group m_group;
     public static Group getGroup(){return m_group;}
     public List<Integer> userIdList = new ArrayList<>();

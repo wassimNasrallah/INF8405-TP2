@@ -18,6 +18,7 @@ public class User {
     private String userName;
     public String getUserName(){return userName;}
     private int UserId;
+    public int getUserId(){return UserId;}
 
     public static User createUser(String name, Bitmap picture){
         m_user = new User(name, picture);

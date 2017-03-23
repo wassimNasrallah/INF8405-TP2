@@ -1,7 +1,8 @@
 package com.example.wassim.tp2.DataStructures;
 
 import android.app.Activity;
-import android.location.Location;
+
+import com.example.wassim.tp2.database.DatabaseAccesObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,7 +16,7 @@ public class Group {
     private Activity m_activity;
     private String name;
     private String organisaterName;
-    private List<String>users;
+    private List<Integer>users;
     private Place[] locations;
     private Events event;
     private int groupId;
@@ -26,7 +27,7 @@ public class Group {
         if(true){//TODO seek for database if the group exist
             //TODO fill the m_group with a new group according to database
             m_group = getGroupFromDatabase(name, activity);
-            m_group.users.add(User.getUser().getUserName());
+            m_group.users.add(User.getUser().getUserId());
             //TODO add current user to group and database
             return true;
         }else{
@@ -41,23 +42,27 @@ public class Group {
         this.event = null;
         this.organisaterName = User.getUser().getUserName();
         this.users = new ArrayList<>();
-        users.add(User.getUser().getUserName());//TODO maybe use uniqueID
+        users.add(User.getUser().getUserId());//TODO maybe use uniqueID
 
         //TODO add group to database
         //TODO fill groupID with the database fixedID
     }
 
-    private static Group getGroupFromDatabase(String name,Activity activity){
-        //TODO get list<string> users from db
-        //TODO get []int locationID from db
-        //TODO get int eventID
-        //TODO get the groupID
-        Group group = new Group(name, activity,-1 ,null,null,-1);
+    private static Group getGroupFromDatabase(String groupName,Activity activity){
+        DatabaseAccesObject dao = new DatabaseAccesObject(activity);
+        //gather data from database
+        Integer groupId = dao.gatherGroupIdFromGroupName(groupName);
+        Integer eventId = dao.gatherEventIdFromGroupId(groupId);
+        List<Integer> userIdList = dao.gatherUserIdListFromGroup(groupName);
+        Integer[] placeIdList = dao.gatherPlaceIdListFromEventId(eventId);
+        //create the group
+        Group group = new Group(groupName, activity, groupId, userIdList, placeIdList, eventId);
         return group;
     }
-    private Group(String name, Activity activity,int groupID, List<String> users, int[] locationID, int eventId){
+    private Group(String name, Activity activity,int groupID, List<Integer> users, Integer[] locationID, int eventId){
         if(eventId!=-1){
-            //TODO getEvent(eventID)
+            DatabaseAccesObject dao = new DatabaseAccesObject(activity);
+            event =  dao.gatherEventFromEventId(eventId);
         }
         for(int i : locationID){
             if(i!=-1){
@@ -91,8 +96,8 @@ public class Group {
             }
         }
     }
-    public void recordUserAnswerForEvent(String user, AnswerToEventEnum answer){
-        event.setUserAnswer(user,answer);
+    public void recordUserAnswerForEvent(Integer userId, AnswerToEventEnum answer){
+        event.setUserAnswer(userId,answer);
     }
     public boolean isAdmin(){
         return organisaterName==User.getUser().getUserName();

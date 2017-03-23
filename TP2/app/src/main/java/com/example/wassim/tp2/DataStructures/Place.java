@@ -1,5 +1,5 @@
 package com.example.wassim.tp2.DataStructures;
-import android.graphics.Picture;
+import android.graphics.Bitmap;
 import android.location.Location;
 
 import java.util.HashMap;
@@ -11,17 +11,23 @@ import java.util.List;
 
 public class Place {
 
-    private Picture locationImage;
-    private HashMap<String,Integer> userNotes;
+    private Bitmap locationImage;
+    private HashMap<String,Integer> userScoreMap;
     private Location location;
 
     //might need more stuff in here
     public Place(List<String>users){
-        userNotes = new HashMap<>();
+        userScoreMap = new HashMap<>();
         for(String name : users){
-            userNotes.put(name, -1);
+            userScoreMap.put(name, -1);
             //TODO update database with the empty answer
         }
+    }
+
+    public Place (Bitmap image, Location newLocation, HashMap<String,Integer> scoreMap ){
+        locationImage = image;
+        userScoreMap = scoreMap;
+        location = newLocation;
     }
 
     public void update(){
@@ -38,13 +44,13 @@ public class Place {
      return "LocationFormatWhatever";
     }
     public void addScore(String user, int note){
-        userNotes.put(user,note);
+        userScoreMap.put(user,note);
         //TODO update database with the new answer
     }
     public float getAverage(){
         float sum=0;
         int number=0;
-        for(int j : userNotes.values()){
+        for(int j : userScoreMap.values()){
             if(j>0){
                 number++;
                 sum+=j;

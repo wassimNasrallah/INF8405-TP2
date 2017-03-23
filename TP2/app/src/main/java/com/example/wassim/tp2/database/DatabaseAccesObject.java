@@ -1,5 +1,6 @@
 package com.example.wassim.tp2.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -56,7 +57,6 @@ public class DatabaseAccesObject {
         return enventId;
     }
 
-    //get list<string> usersId from db
     public List<Integer> gatherUserIdListFromGroup(String groupName) {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         List<Integer> userIdList = new ArrayList<>();
@@ -77,6 +77,14 @@ public class DatabaseAccesObject {
         }
         cursor.close();
         return userIdList;
+    }
+    public List<User> gatherUserList(String groupName) {
+        List<User> userList = new ArrayList<>();
+        List<Integer> userIdList = gatherUserIdListFromGroup(groupName);
+        for(Integer userId :userIdList){
+            userList.add(gatherUser(userId));
+        }
+        return userList;
     }
 
     //get the groupID
@@ -259,6 +267,29 @@ public class DatabaseAccesObject {
         return scoreMap;
     }
 
+    public int updateLocation(Integer userId, Location newLocation) {
+        SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
+
+        // Which row to update, based on the title
+        String selection = DatabaseContract.UserTable.USER_ID+ " LIKE ?";
+        String[] selectionArgs = { userId.toString() };
+
+        // New value for one column
+        ContentValues values = new ContentValues();
+        Double latitude = newLocation.getLatitude();
+        Double longitude = newLocation.getLongitude();
+        values.put(DatabaseContract.UserTable.LATITUDE_COL3, latitude);
+        values.put(DatabaseContract.UserTable.LONGITUDE_COL4, longitude);
+
+        int count = dataBase.update(
+                DatabaseContract.GroupTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        return count;
+
+    }
+
     private boolean isNotNull(Object o) {
         return o != null;
     }
@@ -276,4 +307,6 @@ public class DatabaseAccesObject {
 
 
     }
+
+
 }

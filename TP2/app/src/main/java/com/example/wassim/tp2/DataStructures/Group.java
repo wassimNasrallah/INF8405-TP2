@@ -1,6 +1,8 @@
 package com.example.wassim.tp2.DataStructures;
 
 
+import android.location.Location;
+
 import com.example.wassim.tp2.database.DatabaseAccesObject;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class Group {
     private int groupId;
     private static Group m_group;
     public static Group getGroup(){return m_group;}
+    public List<Integer> userIdList = new ArrayList<>();
+
 
     public static boolean getOrCreateGroup(String groupName){
         if(false){//TODO seek for database if the group exist
@@ -43,10 +47,14 @@ public class Group {
         this.organisaterName = User.getUser().getUserName();
         this.users = new ArrayList<>();
         users.add(User.getUser());
-
+        locations = new Place[3];
+        for(User userId : users){
+            userIdList.add(userId.getUserId());
+        }
         //TODO add group to database
         //TODO fill groupID with the database fixedID
     }
+
 
 
     private Group(String name,int groupID, List<User> users, Integer[] locationID, int eventId){
@@ -66,11 +74,35 @@ public class Group {
         this.name = name;
         this.users = users;
         this.groupId = groupID;
+        for(User userId : users){
+            userIdList.add(userId.getUserId());
+        }
+    }
+
+    //TODO call this method when adding a location to the places
+    public void addLocation(Location location){
+        int i=0;
+        while(i<3 &&locations[i]!=null){
+            i++;
+        }
+        if(i<3){
+            locations[i] = new Place(userIdList, location);
+        }
     }
 
     public void update(){
         Settings.getInstance().update();
         updateGroup(getGroupFromDatabase(name));
+
+        boolean fillingIsDone=true;
+        for(Place p : locations){
+            if(!p.isAllAnswered()){
+                fillingIsDone=false;
+            }
+        }
+        if(fillingIsDone){
+            //TODO hint owner that evaluations are done
+        }
 
     }
 
@@ -95,7 +127,7 @@ public class Group {
     }
 
     public void createEvent(int locationNumber, String name, String description, Date start, Date end){
-        event = new Events(name,locations[locationNumber],start,end, users,description);
+        event = new Events(name,locations[locationNumber],start,end, userIdList,description);
         //TODO Send event to users
     }
     public void recordUserAnswerForLocation(List<Integer> notes) {

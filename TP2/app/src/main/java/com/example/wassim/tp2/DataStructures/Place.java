@@ -6,6 +6,7 @@ import com.example.wassim.tp2.database.DatabaseAccesObject;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Louis-Philippe on 3/4/2017.
@@ -19,12 +20,13 @@ public class Place {
     private Location location;
 
     //might need more stuff in here
-    public Place(List<Integer>users){
+    public Place(List<Integer>users, Location location){
         userScoreMap = new HashMap<>();
         for(Integer userId : users){
             userScoreMap.put(userId, -1);
             //TODO update database with the empty answer
         }
+        this.location = location;
     }
 
     public Place (Bitmap image, Location newLocation, HashMap<Integer,Integer> scoreMap ){
@@ -59,6 +61,17 @@ public class Place {
         userScoreMap.put(userId,note);
         //TODO update database with the new answer
     }
+
+    public boolean isAllAnswered(){
+        boolean isFilled = true;
+        for(Integer i: userScoreMap.values()){
+            if(i==-1){
+                isFilled=false;
+            }
+        }
+        return isFilled;
+    }
+
     public float getAverage(){
         float sum=0;
         int number=0;

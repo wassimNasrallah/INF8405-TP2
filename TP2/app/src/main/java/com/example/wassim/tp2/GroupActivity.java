@@ -16,7 +16,7 @@ import android.widget.Button;
  * Created by Wassim on 28/02/2017.
  */
 
-public class Group extends AppCompatActivity {
+public class GroupActivity extends AppCompatActivity {
 
     Button buttonVote;
 

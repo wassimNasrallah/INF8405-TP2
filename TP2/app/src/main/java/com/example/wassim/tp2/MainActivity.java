@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.wassim.tp2.DataStructures.Group;
+import com.example.wassim.tp2.DataStructures.User;
 import com.example.wassim.tp2.DataStructures.Settings;
 import com.example.wassim.tp2.database.DatabaseTest;
 

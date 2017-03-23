@@ -25,7 +25,6 @@ public class Place {
     }
 
     public void update(){
-
     }
 
     public Place getPlace(int placeId){

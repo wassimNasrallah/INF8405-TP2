@@ -30,20 +30,20 @@ public class GroupDao {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         String query =
                 "SELECT User.name, User.photo, Role.role " +
-                "FROM Group" +
-                "JOIN Role ON Group.groupId = Role.groupId" +
+                "FROM GroupActivity" +
+                "JOIN Role ON GroupActivity.groupId = Role.groupId" +
                 "JOIN User ON User.userId = Role.groupId" +
-                "WHERE Group.name = ?";
+                "WHERE GroupActivity.name = ?";
         String[] selectionArgs = {groupName};
         Cursor cursor = dataBase.rawQuery(query,selectionArgs);
         if (cursor.moveToFirst()){
             while(!cursor.isAfterLast()){
-                String userName = cursor.getString(cursor.getColumnIndex("Group.name"));
+                String userName = cursor.getString(cursor.getColumnIndex("GroupActivity.name"));
                 String userRole = cursor.getString(cursor.getColumnIndex("Role.role"));
                 byte[] userPhotoByte = cursor.getBlob(cursor.getColumnIndex("User.photo"));
                 Bitmap userPhoto = BitmapFactory.decodeByteArray(userPhotoByte, 0, userPhotoByte.length);
 
-                User newUser = new User(userName,userPhoto);
+                //User newUser = new User(userName,userPhoto);
                 cursor.moveToNext();
             }
         }

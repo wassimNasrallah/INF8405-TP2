@@ -1,6 +1,5 @@
 package com.example.wassim.tp2.DataStructures;
 
-import android.app.Activity;
 import android.location.Location;
 
 import java.util.ArrayList;

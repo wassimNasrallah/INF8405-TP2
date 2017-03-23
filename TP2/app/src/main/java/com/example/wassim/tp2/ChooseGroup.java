@@ -45,10 +45,10 @@ public class ChooseGroup extends AppCompatActivity {
 
                 EditText text = (EditText)findViewById(R.id.textGroup);
                 Group.getOrCreateGroup(text.getText().toString());
-                Intent i = new Intent(getBaseContext(), Group.class);
+                Intent i = new Intent(getBaseContext(), GroupActivity.class);
                 startActivity(i);
 
-                Intent i2 = new Intent(ChooseGroup.this, Group.class);
+                Intent i2 = new Intent(ChooseGroup.this, GroupActivity.class);
                 i2.putExtra("text", text.getText().toString());
                 startActivity(i2);
 

@@ -38,7 +38,7 @@ public final class DatabaseContract {
 
      /* Inner class that defines the table contents */
     public static class GroupTable implements BaseColumns {
-        public static final String TABLE_NAME = "Group";
+        public static final String TABLE_NAME = "GroupActivity";
         public static final String GROUP_NAME_COL1 = "name";
 
         public static final String CREATE_TABLE = "CREATE TABLE " +

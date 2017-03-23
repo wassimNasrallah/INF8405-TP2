@@ -31,10 +31,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ChooseGroup" ></activity>
-        <activity android:name=".Group" ></activity>
+        <activity android:name=".GroupActivity" ></activity>
         <activity android:name=".PlaceScore" ></activity>
         <activity android:name=".PlaceScoreAdmin" ></activity>
-        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="MYKEY-Rh6VKYwOqZOG88-kM_4giBg-Sg"/>
+        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyAEZaQQk4GlLJHkn-Xx8M3wuthesK7pZ6g"/>
     </application>
 
 </manifest>

@@ -20,7 +20,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -32,18 +31,16 @@ public class Events {
     private String name;
     private HashMap<Integer, AnswerToEventEnum> participationAnswerMap;
     private Place location;
+    public Place getLocation(){return location;}
     private Date start;
     private Date end;
     private String freeDescription;
 
-    public Events(String name, Place location, Date start, Date end, List<User> userList, String freeDescription){
+    public Events(String name, Place location, Date start, Date end, List<Integer> userIdList, String freeDescription){
         participationAnswerMap = new HashMap<Integer, AnswerToEventEnum>();
         this.start = start;
         this.end = end;
-        List<Integer> userIdList = new ArrayList<>();
-        for(User userId : userList){
-            userIdList.add(userId.getUserId());
-        }
+
         for (Integer userId :userIdList ) {
             participationAnswerMap.put(userId, AnswerToEventEnum.NOTANSWERED);
         }

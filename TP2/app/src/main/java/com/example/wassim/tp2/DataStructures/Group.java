@@ -15,8 +15,11 @@ public class Group {
     private String name;
     private String organisaterName;
     private List<Integer>users;
+    public List<Integer>getUsers(){return users;}
     private Place[] locations;
+    public Place[]getLocations(){return locations;}
     private Events event;
+    public Events getEvent(){return event;}
     private int groupId;
     private static Group m_group;
     public static Group getGroup(){return m_group;}

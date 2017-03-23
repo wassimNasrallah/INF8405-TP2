@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.BatteryManager;
 import android.os.Build;
-import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
 
 import com.example.wassim.tp2.GroupActivity;
 
@@ -35,16 +33,16 @@ public class Settings {
 
         BatteryManager bm = (BatteryManager)ContextHolder.getMainContext().getSystemService(Context.BATTERY_SERVICE);
         int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
-        if(batLevel<20 && askForBatterySaving){
+        if(batLevel<20 && askForBatterySaving && databasePullTick==1000){
             //Call UI for battery saving mode
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(ContextHolder.getMainContext());
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ContextHolder.getCurrentContext());
             builder.setTitle("Battery usage").setMessage("Switch to power saving ?");
             builder.setIcon(android.R.drawable.ic_dialog_alert);
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //Yes button clicked, do something
-                    databasePullTick = 100;
+                    databasePullTick = 30000;
                 }
             });
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

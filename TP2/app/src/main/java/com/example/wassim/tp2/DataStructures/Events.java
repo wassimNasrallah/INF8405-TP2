@@ -13,11 +13,14 @@ import com.example.wassim.tp2.database.DatabaseAccesObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -33,12 +36,16 @@ public class Events {
     private Date end;
     private String freeDescription;
 
-    public Events(String name, Place location, Date start, Date end, List<Integer> userIdList, String freeDescription){
+    public Events(String name, Place location, Date start, Date end, List<User> userList, String freeDescription){
         participationAnswerMap = new HashMap<Integer, AnswerToEventEnum>();
         this.start = start;
         this.end = end;
-        for (Integer user : userIdList) {
-            participationAnswerMap.put(user, AnswerToEventEnum.NOTANSWERED);
+        List<Integer> userIdList = new ArrayList<>();
+        for(User userId : userList){
+            userIdList.add(userId.getUserId());
+        }
+        for (Integer userId :userIdList ) {
+            participationAnswerMap.put(userId, AnswerToEventEnum.NOTANSWERED);
         }
         this.freeDescription = freeDescription;
         //TODO update database with the new event

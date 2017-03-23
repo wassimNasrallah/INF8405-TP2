@@ -2,9 +2,7 @@ package com.example.wassim.tp2.DataStructures;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Criteria;
@@ -14,7 +12,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.*;
+import android.support.v4.app.ActivityCompat;
 
 import com.example.wassim.tp2.database.DatabaseAccesObject;
 
@@ -118,12 +116,15 @@ public class User {
     public User getUser(Integer userId) {
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
         return dao.gatherUser(userId);
-
     }
 
     public void updateLocation(Location location) {
-
         this.userLocation = location;
-        //TODO update local database
+        updateLocationInDatabase(location);
+    }
+
+    private void updateLocationInDatabase(Location newLocation){
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        dao.updateLocation(UserId,newLocation);
     }
 }

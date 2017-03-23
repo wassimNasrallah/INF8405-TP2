@@ -20,6 +20,7 @@ public final class DatabaseContract {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Tp2Database.db";
     private static final String TEXT_TYPE = " TEXT";
+    private static final String REAL_TYPE = " REAL";
     private static final String BLOB_TYPE = " BLOB";
     private static final String INTEGER_TYPE = " INTEGER";
     private static final String DATE_TYPE = " DATETIME";
@@ -55,12 +56,18 @@ public final class DatabaseContract {
         public static final String USER_ID = "userId";
         public static final String NAME_COL1 = "name";
         public static final String PHOTO_COL2 = "photo";
+        public static final String LATITUDE_COL3 = "latitude";
+        public static final String LONGITUDE_COL4 = "longitude";
+
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
                 USER_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                 NAME_COL1 + TEXT_TYPE + COMMA_SEP +
-                PHOTO_COL2 + BLOB_TYPE + " )";
+                PHOTO_COL2 + BLOB_TYPE + COMMA_SEP +
+                LATITUDE_COL3 + REAL_TYPE + COMMA_SEP +
+                LONGITUDE_COL4 + REAL_TYPE +
+                " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
@@ -115,8 +122,8 @@ public final class DatabaseContract {
                 PLACE_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                 NAME_COL1 + TEXT_TYPE + COMMA_SEP +
                 PHOTO_NAME_COL2 + BLOB_TYPE + COMMA_SEP +
-                LATITUDE_COL3 + TEXT_TYPE + COMMA_SEP +
-                LONGITUDE_COL4 + TEXT_TYPE + COMMA_SEP +
+                LATITUDE_COL3 + REAL_TYPE + COMMA_SEP +
+                LONGITUDE_COL4 + REAL_TYPE  +
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 

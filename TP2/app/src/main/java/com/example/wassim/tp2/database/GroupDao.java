@@ -43,7 +43,7 @@ public class GroupDao {
                 byte[] userPhotoByte = cursor.getBlob(cursor.getColumnIndex("User.photo"));
                 Bitmap userPhoto = BitmapFactory.decodeByteArray(userPhotoByte, 0, userPhotoByte.length);
 
-                //User newUser = new User(userName,userPhoto);
+                User newUser = User.createUser(userName,userPhoto);
                 cursor.moveToNext();
             }
         }

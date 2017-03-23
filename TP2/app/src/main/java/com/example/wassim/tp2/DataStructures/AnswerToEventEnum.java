@@ -16,4 +16,14 @@ public enum AnswerToEventEnum {
     public String ToString(){
         return message;
     }
+
+    public static AnswerToEventEnum resolveAnswer(String message){
+
+        for (AnswerToEventEnum answer: AnswerToEventEnum.values()){
+            if(answer.ToString().equals(message)){
+                return answer;
+            }
+        }
+        return AnswerToEventEnum.NOTANSWERED;
+    }
 }

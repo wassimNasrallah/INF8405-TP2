@@ -42,6 +42,7 @@ public class User {
     }
 
     private int UserId;
+    public int getUserId(){return UserId;}
 
     public static User createUser(String name, Bitmap picture) {
         LocationManager locationManager;

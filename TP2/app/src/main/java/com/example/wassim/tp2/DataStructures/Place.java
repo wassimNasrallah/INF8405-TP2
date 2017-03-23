@@ -21,6 +21,7 @@ public class Place {
 
     //might need more stuff in here
     public Place(List<Integer>users, Location location){
+        //TODO save Place in database
         userScoreMap = new HashMap<>();
         for(Integer userId : users){
             userScoreMap.put(userId, -1);
@@ -55,6 +56,11 @@ public class Place {
 
     public double getLocationLon(){
         return location.getLongitude();
+    }
+
+    public void addImage(Bitmap image){
+        this.locationImage = image;
+        //TODO update imge to database;
     }
 
     public void addScore(int userId, int note){

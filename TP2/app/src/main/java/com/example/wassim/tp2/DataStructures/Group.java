@@ -46,19 +46,19 @@ public class Group {
     }
 
     private static Group getGroupFromDatabase(String groupName){
-        DatabaseAccesObject dao = new DatabaseAccesObject(activity);
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
         //gather data from database
         Integer groupId = dao.gatherGroupIdFromGroupName(groupName);
         Integer eventId = dao.gatherEventIdFromGroupId(groupId);
         List<Integer> userIdList = dao.gatherUserIdListFromGroup(groupName);
         Integer[] placeIdList = dao.gatherPlaceIdListFromEventId(eventId);
         //create the group
-        Group group = new Group(name,-1 ,null,null,-1);
+        Group group = new Group(groupName,groupId ,userIdList,placeIdList ,eventId);
         return group;
     }
     private Group(String name,int groupID, List<Integer> users, Integer[] locationID, int eventId){
         if(eventId!=-1){
-            DatabaseAccesObject dao = new DatabaseAccesObject(activity);
+            DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
             event =  dao.gatherEventFromEventId(eventId);
         }
         if(locationID!=null) {

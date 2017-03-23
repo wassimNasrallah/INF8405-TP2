@@ -8,8 +8,10 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.*;
 
 /**
  * Created by Louis-Philippe on 3/22/2017.
@@ -42,8 +44,12 @@ public class User {
     }
 
     private int UserId;
-    public int getUserId(){return UserId;}
 
+    public int getUserId() {
+        return UserId;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public static User createUser(String name, Bitmap picture) {
         LocationManager locationManager;
 
@@ -57,18 +63,20 @@ public class User {
         String provider = locationManager.getBestProvider(criteria, true);
 
 // We can use the provider immediately to get the last known location
-        if (ActivityCompat.checkSelfPermission(ContextHolder.getMainContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ContextHolder.getMainContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        // request that the provider send this activity GPS updates every 20 seconds
+        if (ContextHolder.getMainContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextHolder.getMainContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
+            //    Activity#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-        }else {
-            Location location = locationManager.getLastKnownLocation(provider);
+            // for Activity#requestPermissions for more details.
 
-            // request that the provider send this activity GPS updates every 20 seconds
+        }else {
             locationManager.requestLocationUpdates(provider, 20000, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {

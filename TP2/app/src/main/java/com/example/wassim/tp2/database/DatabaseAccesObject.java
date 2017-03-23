@@ -214,7 +214,7 @@ public class DatabaseAccesObject {
 
     public Place gatherPlace(Integer placeId) {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
-        HashMap<String, Integer> scoreMap = gatherScoreMapFromPlaceId(placeId);
+        HashMap<Integer, Integer> scoreMap = gatherScoreMapFromPlaceId(placeId);
         String placeName = "";
         Location placeLocation = null;
         Bitmap image = null;
@@ -245,9 +245,9 @@ public class DatabaseAccesObject {
     }
 
 
-    public HashMap<String, Integer> gatherScoreMapFromPlaceId(Integer placeId) {
+    public HashMap<Integer, Integer> gatherScoreMapFromPlaceId(Integer placeId) {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
-        HashMap<String, Integer> scoreMap = new HashMap<>();
+        HashMap<Integer, Integer> scoreMap = new HashMap<>();
         String placeScoreListQuery =
                 "SELECT PlaceScore.userId, PlaceScore.score" +
                         "FROM Place" +
@@ -257,9 +257,9 @@ public class DatabaseAccesObject {
         Cursor cursor = dataBase.rawQuery(placeScoreListQuery, selectionArgs);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                String userName = cursor.getString(cursor.getColumnIndex("PlaceScore.userId"));
+                Integer userId = cursor.getInt(cursor.getColumnIndex("PlaceScore.userId"));
                 Integer score = cursor.getInt(cursor.getColumnIndex("PlaceScore.score"));
-                scoreMap.put(userName, score);
+                scoreMap.put(userId, score);
                 cursor.moveToNext();
             }
         }

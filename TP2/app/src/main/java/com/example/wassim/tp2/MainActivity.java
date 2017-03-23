@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             if(Group.getGroup()!=null)
-                                Group.getGroup().updateGroup();
+                                Group.getGroup().update();
                         }
                         catch (Exception e) {
                             // TODO Auto-generated catch block

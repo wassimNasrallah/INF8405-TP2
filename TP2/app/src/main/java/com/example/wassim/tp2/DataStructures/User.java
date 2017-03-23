@@ -11,6 +11,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 
+import com.example.wassim.tp2.database.DatabaseAccesObject;
+
 /**
  * Created by Louis-Philippe on 3/22/2017.
  */
@@ -95,17 +97,15 @@ public class User {
         return m_user;
     }
 
-    private User(String name, Bitmap picture) {
+    public User(String name, Bitmap picture) {
         this.userName = name;
         this.userPicture = picture;
         this.userLocation = null;
     }
 
-    public User getUser(String userName) {
-        //TODO get location/image from database
-        User u = new User(userName, null);
-        u.updateLocation(null);
-        return u;
+    public User getUser(Integer userId) {
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        return dao.gatherUser(userId);
 
     }
 

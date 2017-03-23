@@ -2,6 +2,8 @@ package com.example.wassim.tp2.DataStructures;
 import android.graphics.Bitmap;
 import android.location.Location;
 
+import com.example.wassim.tp2.database.DatabaseAccesObject;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,11 +33,12 @@ public class Place {
     }
 
     public void update(){
+
     }
 
     public Place getPlace(int placeId){
-        //TODO get info from db
-        return null;
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        return dao.gatherPlace(placeId);
     }
 
     public String getLocationString(){

@@ -270,7 +270,7 @@ public class DatabaseAccesObject {
         return scoreMap;
     }
 
-    public int updateLocation(Integer userId, Location newLocation) {
+    public void updateUserLocation(Integer userId, Location newLocation) {
         SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
 
         // Which row to update, based on the title
@@ -289,7 +289,7 @@ public class DatabaseAccesObject {
                 values,
                 selection,
                 selectionArgs);
-        return count;
+       // return count;
 
     }
 
@@ -376,6 +376,48 @@ public class DatabaseAccesObject {
         return newRowId;
     }
 
+    public long insertScore(Integer userId, long placeId, Integer score) {
+        SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.PlaceScoreTable.USER_REFERENCE_COL1, userId);
+        values.put(DatabaseContract.PlaceScoreTable.PLACE_REFERENCE_COL2, placeId);
+        values.put(DatabaseContract.PlaceScoreTable.SCORE_COL3, score);
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = dataBase.insert(DatabaseContract.PlaceScoreTable.TABLE_NAME, null, values);
+        return newRowId;
+    }
+
+    public void updatePlaceImage(long placeId, Bitmap image) {
+        SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
+        // Which row to update, based on the title
+        String selection = DatabaseContract.PlaceTable.PLACE_ID+ " LIKE ?";
+        String[] selectionArgs = { Long.toString(placeId) };
+        // New value for one column
+        ContentValues values = new ContentValues();
+        byte[] photoByte = getBytes(image);
+        values.put(DatabaseContract.PlaceTable.PHOTO_COL2, photoByte);
+        int count = dataBase.update(
+                DatabaseContract.PlaceTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+    }
+
+    public void updatePlaceScore(int userId, long placeId, int score) {
+        SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
+        String selection = DatabaseContract.PlaceScoreTable.PLACE_REFERENCE_COL2+ " LIKE ?";
+        String[] selectionArgs = { Long.toString(placeId) };
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.PlaceScoreTable.USER_REFERENCE_COL1, userId);
+        values.put(DatabaseContract.PlaceScoreTable.SCORE_COL3, score);
+        int count = dataBase.update(
+                DatabaseContract.PlaceScoreTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+    }
+
     // convert from bitmap to byte array
     public static byte[] getBytes(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -406,6 +448,5 @@ public class DatabaseAccesObject {
     }
 
 
-    public void persistScore(Integer userId, Object o) {
-    }
+
 }

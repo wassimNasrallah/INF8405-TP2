@@ -113,16 +113,14 @@ public final class DatabaseContract {
     public static class PlaceTable implements BaseColumns {
         public static final String TABLE_NAME = "Place";
         public static final String PLACE_ID = "placeId";
-        public static final String NAME_COL1 = "name";
-        public static final String PHOTO_NAME_COL2 = "photo";
+        public static final String PHOTO_COL2 = "photo";
         public static final String LATITUDE_COL3 = "latitude";
         public static final String LONGITUDE_COL4 = "longitude";
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
                 PLACE_ID + INTEGER_TYPE + PRIMARY_KEY + AUTOINCREMENT + COMMA_SEP +
-                NAME_COL1 + TEXT_TYPE + COMMA_SEP +
-                PHOTO_NAME_COL2 + BLOB_TYPE + COMMA_SEP +
+                PHOTO_COL2 + BLOB_TYPE + COMMA_SEP +
                 LATITUDE_COL3 + REAL_TYPE + COMMA_SEP +
                 LONGITUDE_COL4 + REAL_TYPE  +
                 " )";

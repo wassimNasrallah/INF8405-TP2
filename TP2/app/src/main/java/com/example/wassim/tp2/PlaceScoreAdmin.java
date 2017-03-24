@@ -23,7 +23,6 @@ public class PlaceScoreAdmin extends AppCompatActivity{
 
     Button buttonAddPlaces;
     RatingBar ratingBar;
-    int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +50,15 @@ public class PlaceScoreAdmin extends AppCompatActivity{
                 startActivity(i);
 
             }
+        });
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+
+            }
+
         });
 
 

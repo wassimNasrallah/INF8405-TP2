@@ -50,7 +50,7 @@ public class Group {
         users.add(User.getUser());
         locations = new Place[3];
         for(User userId : users){
-            userIdList.add(userId.getUserId());
+            userIdList.add((int)userId.getUserId());
         }
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
         this.groupId =  dao.persistGroup(this);
@@ -75,7 +75,7 @@ public class Group {
         this.users = users;
         this.groupId = groupID;
         for(User userId : users){
-            userIdList.add(userId.getUserId());
+            userIdList.add((int)userId.getUserId());
         }
     }
 
@@ -122,7 +122,7 @@ public class Group {
     }
     public void recordUserAnswerForLocation(List<Integer> notes) {
         for (int i = 0; i < notes.size(); i++) {
-            locations[i].addScore(User.getUser().getUserId(), notes.get(i));
+            locations[i].addScore((int)User.getUser().getUserId(), notes.get(i));
         }
     }
     public void recordUserAnswerForEvent(Integer userId, AnswerToEventEnum answer){

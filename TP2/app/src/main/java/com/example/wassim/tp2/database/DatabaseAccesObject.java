@@ -64,10 +64,9 @@ public class DatabaseAccesObject {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         List<Integer> userIdList = new ArrayList<>();
         String userIdListQuery =
-                "SELECT User.userId " +
-                        "FROM User " +
-                        "JOIN Role ON Group.groupId = Role.groupId " +
-                        "JOIN User ON User.userId = Role.userId " +
+                "SELECT Role.userId " +
+                        "FROM Role " +
+                        "JOIN Group ON Group.groupId = Role.groupId " +
                         "WHERE Group.name = ?";
         String[] selectionArgs = {groupName};
         Cursor cursor = dataBase.rawQuery(userIdListQuery, selectionArgs);
@@ -270,12 +269,12 @@ public class DatabaseAccesObject {
         return scoreMap;
     }
 
-    public void updateUserLocation(Integer userId, Location newLocation) {
+    public void updateUserLocation(long userId, Location newLocation) {
         SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
 
         // Which row to update, based on the title
         String selection = DatabaseContract.UserTable.USER_ID+ " LIKE ?";
-        String[] selectionArgs = { userId.toString() };
+        String[] selectionArgs = { Long.toString(userId) };
 
         // New value for one column
         ContentValues values = new ContentValues();
@@ -285,7 +284,7 @@ public class DatabaseAccesObject {
         values.put(DatabaseContract.UserTable.LONGITUDE_COL4, longitude);
 
         int count = dataBase.update(
-                DatabaseContract.GroupTable.TABLE_NAME,
+                DatabaseContract.UserTable.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
@@ -418,12 +417,25 @@ public class DatabaseAccesObject {
                 selectionArgs);
     }
 
+    public Long insertUser(String name, Bitmap picture) {
+        SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        byte[] photoByte = getBytes(picture);
+        values.put(DatabaseContract.UserTable.NAME_COL1, name);
+        values.put(DatabaseContract.UserTable.PHOTO_COL2, photoByte);
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = dataBase.insert(DatabaseContract.UserTable.TABLE_NAME, null, values);
+        return newRowId;
+    }
+
     // convert from bitmap to byte array
     public static byte[] getBytes(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
         return stream.toByteArray();
     }
+
 
     // convert from byte array to bitmap
     public static Bitmap getImage(byte[] image) {

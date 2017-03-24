@@ -46,10 +46,10 @@ public class User {
         return userName;
     }
 
-    private int UserId;
+    private long userId;
 
-    public int getUserId() {
-        return UserId;
+    public long getUserId() {
+        return userId;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -104,8 +104,8 @@ public class User {
         }
 
         m_user = new User(name, picture);
-        //TODO update Database with new user
-        //TODO assign userId from the database;
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        m_user.userId = dao.insertUser(name,picture);
         return m_user;
     }
 
@@ -127,6 +127,6 @@ public class User {
 
     private void updateLocationInDatabase(Location newLocation){
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
-        dao.updateUserLocation(UserId,newLocation);
+        dao.updateUserLocation(userId,newLocation);
     }
 }

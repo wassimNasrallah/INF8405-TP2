@@ -11,11 +11,18 @@
         android:layout_marginBottom="50dp"/>
 
     <Button
-        android:text="Upload"
+        android:text="Upload Image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:id="@+id/buttonUpload" />
+
+    <Button
+        android:text="Add places"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:id="@+id/buttonAddPlaces" />
 
     <TextView
         android:text="Nom: "

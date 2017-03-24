@@ -23,7 +23,16 @@ public class PlaceScore extends AppCompatActivity {
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         Float ratingNumber = ratingBar.getRating();
 
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            }
+        });
     }
+
+
+
 
 
     //TODO: backend insert place score, photo...

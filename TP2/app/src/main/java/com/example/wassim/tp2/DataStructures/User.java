@@ -127,6 +127,6 @@ public class User {
 
     private void updateLocationInDatabase(Location newLocation){
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
-        dao.updateLocation(UserId,newLocation);
+        dao.updateUserLocation(UserId,newLocation);
     }
 }

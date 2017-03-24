@@ -17,15 +17,16 @@ public class Place {
     public Bitmap getLocationImage(){return locationImage;}
     private HashMap<Integer,Integer> userScoreMap;
     private Location location;
+    private long placeId;
 
     //might need more stuff in here
     public Place(List<Integer>users, Location location){
         DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
-        dao.insertPlace(this);
+        placeId = dao.insertPlace(this);
         userScoreMap = new HashMap<>();
         for(Integer userId : users){
             userScoreMap.put(userId, -1);
-            dao.persistScore(userId,null);
+            dao.insertScore(userId,placeId,null);
         }
         this.location = location;
     }
@@ -60,12 +61,14 @@ public class Place {
 
     public void addImage(Bitmap image){
         this.locationImage = image;
-        //TODO update imge to database;
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        dao.updatePlaceImage(placeId,image);
     }
 
     public void addScore(int userId, int note){
         userScoreMap.put(userId,note);
-        //TODO update database with the new answer
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        dao.updatePlaceScore(userId,placeId,note);
     }
 
     public boolean isAllAnswered(){

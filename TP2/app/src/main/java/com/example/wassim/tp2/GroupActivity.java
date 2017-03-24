@@ -21,6 +21,7 @@ import com.example.wassim.tp2.DataStructures.ContextHolder;
 public class GroupActivity extends AppCompatActivity {
 
     Button buttonVote;
+    Button CreateEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,16 @@ public class GroupActivity extends AppCompatActivity {
                 //TODO: call backend username, password and image
             }
         });
+
+        CreateEvent = (Button) findViewById(R.id.buttonCreateEvent);
+        CreateEvent.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //TODO: create event
+            }
+        });
+
     }
 
 

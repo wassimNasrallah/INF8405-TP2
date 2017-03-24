@@ -23,7 +23,6 @@ public class PlaceScoreAdmin extends AppCompatActivity{
 
     Button buttonAddPlaces;
     RatingBar ratingBar;
-    int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

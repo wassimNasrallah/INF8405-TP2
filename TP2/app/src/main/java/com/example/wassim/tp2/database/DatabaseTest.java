@@ -11,9 +11,9 @@ import android.content.Context;
 public class DatabaseTest {
 
     public static void groupDaoTest1(Context context){
-        GroupDao groupDao = new GroupDao(context);
-        groupDao.writeInGroupTable("newDatabase");
-        groupDao.writeInGroupTable("newDatabase");
-        System.out.println(groupDao.gatherGroupTable("newDatabase").toString());
+        DatabaseAccesObject dao = new DatabaseAccesObject(context);
+        //dao.writeInGroupTable("newDatabase");
+        //.writeInGroupTable("newDatabase");
+        //System.out.println(dao.gatherGroupTable("newDatabase").toString());
     }
 }

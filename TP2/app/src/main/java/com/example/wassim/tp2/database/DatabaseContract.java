@@ -22,13 +22,14 @@ public final class DatabaseContract {
     private static final String TEXT_TYPE = " TEXT";
     private static final String REAL_TYPE = " REAL";
     private static final String BLOB_TYPE = " BLOB";
-    private static final String INTEGER_TYPE = " INTEGER";
+    private static final String INTEGER_TYPE = " INTEGER ";
     private static final String DATE_TYPE = " DATETIME";
     private static final String FOREIGN_KEY = " FOREIGN KEY (";
-    private static final String PRIMARY_KEY = " PRIMARY KEY AUTOINCREMENT";
-    private static final String REFERENCES = ") REFERENCES";
-    private static final String NOT_NULL = " NOT NULL";
-    private static final String COMMA_SEP = ",";
+    private static final String PRIMARY_KEY = " PRIMARY KEY ";
+    private static final String AUTOINCREMENT = " AUTOINCREMENT ";
+    private static final String REFERENCES = ") REFERENCES ";
+    private static final String NOT_NULL = " NOT NULL ";
+    private static final String COMMA_SEP = ", ";
 
     /**
      * To prevent someone from accidentally instantiating the contract class,
@@ -45,7 +46,7 @@ public final class DatabaseContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                GROUP_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                GROUP_ID + INTEGER_TYPE + PRIMARY_KEY + AUTOINCREMENT + COMMA_SEP +
                 GROUP_NAME_COL1 + TEXT_TYPE + " )";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -62,7 +63,7 @@ public final class DatabaseContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                USER_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                USER_ID + INTEGER_TYPE + PRIMARY_KEY + AUTOINCREMENT + COMMA_SEP +
                 NAME_COL1 + TEXT_TYPE + COMMA_SEP +
                 PHOTO_COL2 + BLOB_TYPE + COMMA_SEP +
                 LATITUDE_COL3 + REAL_TYPE + COMMA_SEP +
@@ -82,9 +83,9 @@ public final class DatabaseContract {
                 TABLE_NAME + " (" +
                 USER_REFERENCE_COL1 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                 GROUP_REFERENCE_COL2 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
-                ROLE_COL3 + TEXT_TYPE +
-                FOREIGN_KEY + USER_REFERENCE_COL1 + REFERENCES + UserTable.USER_ID +
-                FOREIGN_KEY + GROUP_REFERENCE_COL2 + REFERENCES + GroupTable.GROUP_ID +
+                ROLE_COL3 + TEXT_TYPE + COMMA_SEP +
+                FOREIGN_KEY + USER_REFERENCE_COL1 + REFERENCES + UserTable.TABLE_NAME + "(" + UserTable.USER_ID + ")" +
+                FOREIGN_KEY + GROUP_REFERENCE_COL2 + REFERENCES + GroupTable.TABLE_NAME + "(" + GroupTable.GROUP_ID + ")" +
                 PRIMARY_KEY + "(" + USER_REFERENCE_COL1 + COMMA_SEP + GROUP_REFERENCE_COL2 + ")" +
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -101,9 +102,9 @@ public final class DatabaseContract {
                 TABLE_NAME + " (" +
                 USER_REFERENCE_COL1 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                 PLACE_REFERENCE_COL2 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
-                SCORE_COL3 + INTEGER_TYPE +
-                FOREIGN_KEY + USER_REFERENCE_COL1 + REFERENCES + UserTable.USER_ID +
-                FOREIGN_KEY + PLACE_REFERENCE_COL2 + REFERENCES + PlaceTable.PLACE_ID +
+                SCORE_COL3 + INTEGER_TYPE + COMMA_SEP+
+                FOREIGN_KEY + USER_REFERENCE_COL1 + REFERENCES + UserTable.TABLE_NAME + "(" + UserTable.USER_ID + ")" +
+                FOREIGN_KEY + PLACE_REFERENCE_COL2 + REFERENCES + PlaceTable.TABLE_NAME + "(" + PlaceTable.PLACE_ID + ")" +
                 PRIMARY_KEY + "(" + USER_REFERENCE_COL1 + COMMA_SEP + PLACE_REFERENCE_COL2 + ")" +
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -119,7 +120,7 @@ public final class DatabaseContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                PLACE_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                PLACE_ID + INTEGER_TYPE + PRIMARY_KEY + AUTOINCREMENT + COMMA_SEP +
                 NAME_COL1 + TEXT_TYPE + COMMA_SEP +
                 PHOTO_NAME_COL2 + BLOB_TYPE + COMMA_SEP +
                 LATITUDE_COL3 + REAL_TYPE + COMMA_SEP +
@@ -141,15 +142,15 @@ public final class DatabaseContract {
 
         public static final String CREATE_TABLE = "CREATE TABLE " +
                 TABLE_NAME + " (" +
-                EVENT_ID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
+                EVENT_ID + INTEGER_TYPE + PRIMARY_KEY + AUTOINCREMENT + COMMA_SEP +
                 GROUP_REFERENCE_COL1 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                 PLACE_REFERENCE_COL2 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                 NAME_COL3 + TEXT_TYPE + COMMA_SEP +
                 START_TIME_COL4 + DATE_TYPE + COMMA_SEP +
                 END_TIME_COL5 + DATE_TYPE + COMMA_SEP +
-                DESCRIPTION_COL6 + TEXT_TYPE +
-                FOREIGN_KEY + GROUP_REFERENCE_COL1 + REFERENCES + GroupTable.GROUP_ID +
-                FOREIGN_KEY + PLACE_REFERENCE_COL2 + REFERENCES + PlaceTable.PLACE_ID +
+                DESCRIPTION_COL6 + TEXT_TYPE + COMMA_SEP+
+                FOREIGN_KEY + GROUP_REFERENCE_COL1 + REFERENCES + GroupTable.TABLE_NAME + "(" + GroupTable.GROUP_ID + ")" +
+                FOREIGN_KEY + PLACE_REFERENCE_COL2 + REFERENCES + PlaceTable.TABLE_NAME + "(" + PlaceTable.PLACE_ID + ")"+
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
@@ -165,11 +166,13 @@ public final class DatabaseContract {
                 TABLE_NAME + " (" +
                 USER_REFERENCE_COL1 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                 PLACE_REFERENCE_COL2 + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
-                SCORE_COL3 + INTEGER_TYPE +
-                FOREIGN_KEY + USER_REFERENCE_COL1 + REFERENCES + UserTable.USER_ID +
-                FOREIGN_KEY + PLACE_REFERENCE_COL2 + REFERENCES + PlaceTable.PLACE_ID +
+                SCORE_COL3 + INTEGER_TYPE + COMMA_SEP+
+                FOREIGN_KEY + USER_REFERENCE_COL1 + REFERENCES + UserTable.TABLE_NAME + "(" + UserTable.USER_ID + ")" +
+                FOREIGN_KEY + PLACE_REFERENCE_COL2 + REFERENCES + PlaceTable.TABLE_NAME + "(" + PlaceTable.PLACE_ID + ")"+
                 PRIMARY_KEY + "(" + USER_REFERENCE_COL1 + COMMA_SEP + PLACE_REFERENCE_COL2 + ")" +
                 " )";
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
+
+
 }

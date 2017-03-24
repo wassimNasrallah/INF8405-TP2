@@ -6,6 +6,7 @@ import com.example.wassim.tp2.database.DatabaseAccesObject;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Louis-Philippe on 3/4/2017.
@@ -14,16 +15,19 @@ import java.util.List;
 public class Place {
 
     private Bitmap locationImage;
+    public Bitmap getLocationImage(){return locationImage;}
     private HashMap<Integer,Integer> userScoreMap;
     private Location location;
 
     //might need more stuff in here
-    public Place(List<Integer>users){
+    public Place(List<Integer>users, Location location){
+        //TODO save Place in database
         userScoreMap = new HashMap<>();
         for(Integer userId : users){
             userScoreMap.put(userId, -1);
             //TODO update database with the empty answer
         }
+        this.location = location;
     }
 
     public Place (Bitmap image, Location newLocation, HashMap<Integer,Integer> scoreMap ){
@@ -45,10 +49,35 @@ public class Place {
         //TODO: figure how to get good syntax
      return "LocationFormatWhatever";
     }
+
+    public double getLocationLat(){
+        return location.getLatitude();
+    }
+
+    public double getLocationLon(){
+        return location.getLongitude();
+    }
+
+    public void addImage(Bitmap image){
+        this.locationImage = image;
+        //TODO update imge to database;
+    }
+
     public void addScore(int userId, int note){
         userScoreMap.put(userId,note);
         //TODO update database with the new answer
     }
+
+    public boolean isAllAnswered(){
+        boolean isFilled = true;
+        for(Integer i: userScoreMap.values()){
+            if(i==-1){
+                isFilled=false;
+            }
+        }
+        return isFilled;
+    }
+
     public float getAverage(){
         float sum=0;
         int number=0;

@@ -78,7 +78,9 @@ public class User {
             // We can use the provider immediately to get the last known location
 
             Location location = locationManager.getLastKnownLocation(provider);
-
+            if(User.getUser()!=null) {
+                User.getUser().updateLocation(location);
+            }
             locationManager.requestLocationUpdates(provider, 20000, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {

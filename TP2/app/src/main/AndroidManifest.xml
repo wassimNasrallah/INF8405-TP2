@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wassim.tp2">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="myapp.permission.MAPS_RECEIVE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="myapp.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-library android:name="com.google.android.maps"/>
+
+    <uses-library android:name="com.google.android.maps" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <application android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <application
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            />
-
-        <uses-feature android:name="android.hardware.camera"
+        <uses-feature
+            android:name="android.hardware.camera"
             android:required="true" />
 
         <activity android:name=".MainActivity">
@@ -30,11 +35,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChooseGroup" ></activity>
-        <activity android:name=".GroupActivity" ></activity>
-        <activity android:name=".PlaceScore" ></activity>
-        <activity android:name=".PlaceScoreAdmin" ></activity>
-        <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyAEZaQQk4GlLJHkn-Xx8M3wuthesK7pZ6g"/>
+        <activity android:name=".ChooseGroup" />
+        <activity android:name=".GroupActivity" />
+        <activity android:name=".PlaceScore" />
+        <activity android:name=".PlaceScoreAdmin" />
+        <activity android:name=".Map" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAEZaQQk4GlLJHkn-Xx8M3wuthesK7pZ6g" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

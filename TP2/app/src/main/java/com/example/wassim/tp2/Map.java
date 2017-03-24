@@ -1,5 +1,6 @@
 package com.example.wassim.tp2;
 
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.wassim.tp2.DataStructures.ContextHolder;
 import com.example.wassim.tp2.DataStructures.Group;
@@ -125,5 +127,6 @@ public void update(){
     }
 
 }
+
     //TODO: backend insert map
 }

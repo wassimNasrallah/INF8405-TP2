@@ -406,5 +406,6 @@ public class DatabaseAccesObject {
     }
 
 
-
+    public void persistScore(Integer userId, Object o) {
+    }
 }

@@ -6,7 +6,6 @@ import com.example.wassim.tp2.database.DatabaseAccesObject;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Louis-Philippe on 3/4/2017.
@@ -21,11 +20,12 @@ public class Place {
 
     //might need more stuff in here
     public Place(List<Integer>users, Location location){
-        //TODO save Place in database
+        DatabaseAccesObject dao = new DatabaseAccesObject(ContextHolder.getMainContext());
+        dao.insertPlace(this);
         userScoreMap = new HashMap<>();
         for(Integer userId : users){
             userScoreMap.put(userId, -1);
-            //TODO update database with the empty answer
+            dao.persistScore(userId,null);
         }
         this.location = location;
     }

@@ -15,6 +15,7 @@ import com.example.wassim.tp2.DataStructures.Group;
 import com.example.wassim.tp2.DataStructures.Place;
 import com.example.wassim.tp2.DataStructures.User;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,10 +64,10 @@ public class DatabaseAccesObject {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         List<Integer> userIdList = new ArrayList<>();
         String userIdListQuery =
-                "SELECT User.userId" +
-                        "FROM User" +
-                        "JOIN Role ON Group.groupId = Role.groupId" +
-                        "JOIN User ON User.userId = Role.userId" +
+                "SELECT User.userId " +
+                        "FROM User " +
+                        "JOIN Role ON Group.groupId = Role.groupId " +
+                        "JOIN User ON User.userId = Role.userId " +
                         "WHERE Group.name = ?";
         String[] selectionArgs = {groupName};
         Cursor cursor = dataBase.rawQuery(userIdListQuery, selectionArgs);
@@ -110,10 +111,10 @@ public class DatabaseAccesObject {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         List<Integer> placeIdList = new ArrayList<>();
         String placeIdListQuery =
-                "SELECT Place.placeId" +
-                        "FROM Group" +
-                        "JOIN Role ON Group.groupId = Role.groupId" +
-                        "JOIN User ON User.userId = Role.userId" +
+                "SELECT Place.placeId " +
+                        "FROM Group " +
+                        "JOIN Role ON Group.groupId = Role.groupId " +
+                        "JOIN User ON User.userId = Role.userId " +
                         "WHERE Event.eventId = ?";
         String[] selectionArgs = {eventId.toString()};
         Cursor cursor = dataBase.rawQuery(placeIdListQuery, selectionArgs);
@@ -139,10 +140,10 @@ public class DatabaseAccesObject {
         Date endDate = null;
         String description = null;
         String placeIdListQuery =
-                "SELECT Event.placeId, Event.name, Even.startTime, Event.endTime, Event.description" +
-                        "FROM Group" +
-                        "JOIN Role ON Group.groupId = Role.groupId" +
-                        "JOIN User ON User.userId = Role.userId" +
+                "SELECT Event.placeId, Event.name, Even.startTime, Event.endTime, Event.description " +
+                        "FROM Group " +
+                        "JOIN Role ON Group.groupId = Role.groupId " +
+                        "JOIN User ON User.userId = Role.userId " +
                         "WHERE Event.eventId = ?";
         String[] selectionArgs = {eventId.toString()};
         Cursor cursor = dataBase.rawQuery(placeIdListQuery, selectionArgs);
@@ -173,8 +174,8 @@ public class DatabaseAccesObject {
         String userName = null;
         Bitmap photo = null;
         String placeIdListQuery =
-                "SELECT User.name, User.photo" +
-                        "FROM User" +
+                "SELECT User.name, User.photo " +
+                        "FROM User " +
                         "WHERE User.userId = ?";
         String[] selectionArgs = {userId.toString()};
         Cursor cursor = dataBase.rawQuery(placeIdListQuery, selectionArgs);
@@ -195,9 +196,9 @@ public class DatabaseAccesObject {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         HashMap<Integer, AnswerToEventEnum> scoreMap = new HashMap<>();
         String placeScoreListQuery =
-                "SELECT EventParticipation.userId, EventParticipation.answer" +
-                        "FROM Event" +
-                        "JOIN EventParticipation ON Event.eventId = EventParticipation.eventId" +
+                "SELECT EventParticipation.userId, EventParticipation.answer " +
+                        "FROM Event " +
+                        "JOIN EventParticipation ON Event.eventId = EventParticipation.eventId " +
                         "WHERE Event.eventId = ?";
         String[] selectionArgs = {eventId.toString()};
 
@@ -221,9 +222,9 @@ public class DatabaseAccesObject {
         Location placeLocation = null;
         Bitmap image = null;
         String placeIdListQuery =
-                "SELECT Place.photo, Place.name, Pace.latitude, Place.longitude" +
-                        "FROM Place" +
-                        "JOIN PlaceScore ON Place.placeId = PlaceScore.scoreId" +
+                "SELECT Place.photo, Place.name, Pace.latitude, Place.longitude " +
+                        "FROM Place " +
+                        "JOIN PlaceScore ON Place.placeId = PlaceScore.scoreId " +
                         "WHERE Place.placeId = ?";
         String[] selectionArgs = {placeId.toString()};
         Cursor cursor = dataBase.rawQuery(placeIdListQuery, selectionArgs);
@@ -251,9 +252,9 @@ public class DatabaseAccesObject {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         HashMap<Integer, Integer> scoreMap = new HashMap<>();
         String placeScoreListQuery =
-                "SELECT PlaceScore.userId, PlaceScore.score" +
-                        "FROM Place" +
-                        "JOIN PlaceScore ON Place.placeId = PlaceScore.scoreId" +
+                "SELECT PlaceScore.userId, PlaceScore.score " +
+                        "FROM Place " +
+                        "JOIN PlaceScore ON Place.placeId = PlaceScore.scoreId " +
                         "WHERE Place.placeId = ?";
         String[] selectionArgs = {placeId.toString()};
         Cursor cursor = dataBase.rawQuery(placeScoreListQuery, selectionArgs);
@@ -336,8 +337,8 @@ public class DatabaseAccesObject {
     private int gatherUserId(String userName) {
         SQLiteDatabase dataBase = databaseHelper.getReadableDatabase();
         int userId = -1;
-        String query ="SELECT User.userId" +
-                        "FROM User" +
+        String query ="SELECT User.userId " +
+                        "FROM User " +
                         "WHERE User.name = ?";
         String[] selectionArgs = {userName.toString()};
         Cursor cursor = dataBase.rawQuery(query, selectionArgs);
@@ -351,6 +352,7 @@ public class DatabaseAccesObject {
         return userId;
     }
 
+
     public long insertGroup(String groupName){
         SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
         // Create a new map of values, where column names are the keys
@@ -361,6 +363,30 @@ public class DatabaseAccesObject {
         return newRowId;
     }
 
+    public long insertPlace(Place place) {
+        SQLiteDatabase dataBase = databaseHelper.getWritableDatabase();
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        byte[] photoByte = getBytes(place.getLocationImage());
+        values.put(DatabaseContract.PlaceTable.PHOTO_COL2, photoByte);
+        values.put(DatabaseContract.PlaceTable.LATITUDE_COL3, place.getLocationLat());
+        values.put(DatabaseContract.PlaceTable.LONGITUDE_COL4, place.getLocationLon());
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = dataBase.insert(DatabaseContract.PlaceTable.TABLE_NAME, null, values);
+        return newRowId;
+    }
+
+    // convert from bitmap to byte array
+    public static byte[] getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
+
+    // convert from byte array to bitmap
+    public static Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
     private static boolean isNotNull(Object o) {
         return o != null;
     }
@@ -380,4 +406,6 @@ public class DatabaseAccesObject {
     }
 
 
+    public void persistScore(Integer userId, Object o) {
+    }
 }

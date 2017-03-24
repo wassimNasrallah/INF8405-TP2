@@ -28,6 +28,13 @@
         android:layout_gravity="right"
         android:id="@+id/buttonCreateEvent" />
 
+    <Button
+        android:text="Add to calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:id="@+id/buttonAddToCalendar" />
+
     <TextView
         android:text="Event Name"
         android:layout_width="match_parent"
